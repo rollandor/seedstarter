@@ -2,9 +2,9 @@ import { Navbar, Dashboard } from "./components";
 
 function App() {
   return (
-    <div>
+    <div class='min-h-screen w-[768px] mx-auto'>
       <Navbar />
-      {/* <Dashboard /> */}
+      <Dashboard />
     </div>
   )
 }
