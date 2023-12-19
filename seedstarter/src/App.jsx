@@ -2,7 +2,7 @@ import { Navbar, Dashboard, Bottom } from "./components";
 
 function App() {
   return (
-    <div class='min-h-screen w-[768px] mx-auto'>
+    <div class='min-h-screen w-[1144px] mx-auto'>
       <Navbar />
       <Dashboard />
       <Bottom />

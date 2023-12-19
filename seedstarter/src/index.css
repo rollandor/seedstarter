@@ -6,8 +6,7 @@
 
 body {
   margin: 0;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #EDF1F7;
