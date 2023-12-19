@@ -7,8 +7,10 @@
 body {
   margin: 0;
   font-family: "Open Sans", sans-serif;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #EDF1F7;
 }
 
 @tailwind base;
