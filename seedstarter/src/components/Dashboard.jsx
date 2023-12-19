@@ -10,11 +10,11 @@ function Button(text) {
 
 function TokenBalancePanel() {
   return (
-    <div class='h-[186px] bg-[#8060C8] rounded-lg font-bold'>
+    <div class='h-44 py-4 bg-[#8060C8] rounded-lg font-bold'>
 
       <div class='h-1/2 ml-7 flex items-center'>
-        <div class='w-[48px] h-[48px] rounded-[50%] bg-[#D9D9D9]'></div>
-        <div class='w-1/2 h-[48px] ml-4 flex flex-col justify-between'>
+        <div class='w-12 h-12 rounded-[50%] bg-[#D9D9D9]'></div>
+        <div class='w-1/2 h-12 ml-4 flex flex-col justify-between'>
           <span class='text-[#40E060]'>TOKEN BALANCE</span>
           <div>
             <span class='text-white'>1222 </span>
@@ -47,7 +47,7 @@ function TokenBalancePanel() {
 
 function ICOStatusBoard() {
   return (
-    <div class='pl-7 w-1/2 gap-4 rounded-lg bg-white flex flex-col justify-center'>
+    <div class='px-7 w-1/2 gap-4 rounded-lg bg-white flex flex-col justify-center'>
       <div class='flex items-center'>
         <h1 class='font-bold text-lg'>ICO Round 1</h1>
         <span class='bg-[#8060C8] py-1 px-2 ml-2 text-white rounded-lg'>TBA</span>
@@ -142,7 +142,7 @@ function ProgressBoard() {
 
 const Dashboard = () => {
   return (
-    <div class='gap-4 flex flex-col justify-center'>
+    <div class='w-[1144px] gap-4 flex flex-col justify-center pt-4'>
       <TokenBalancePanel />
       <div class='h-[176px] gap-4 flex flex-row justify-between'>
         <ICOStatusBoard />
