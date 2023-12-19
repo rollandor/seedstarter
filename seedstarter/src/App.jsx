@@ -5,7 +5,7 @@ function App() {
     <div class='min-h-screen w-[1144px] mx-auto'>
       <Navbar />
       <Dashboard />
-      <Bottom />
+      {/* <Bottom /> */}
     </div>
   )
 }
