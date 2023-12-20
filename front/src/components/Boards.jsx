@@ -8,7 +8,7 @@ function Button(text) {
   )
 }
 
-function TokenBalancePanel() {
+export function TokenBalancePanel() {
   return (
     <div class='h-44 py-4 bg-[#8060C8] rounded-lg font-bold'>
 
@@ -45,7 +45,7 @@ function TokenBalancePanel() {
   )
 }
 
-function ICOStatusBoard() {
+export function ICOStatusBoard() {
   return (
     <div class='px-7 w-1/2 gap-4 rounded-lg bg-white flex flex-col justify-center'>
       <div class='flex items-center'>
@@ -64,7 +64,7 @@ function ICOStatusBoard() {
   )
 }
 
-function AccountStatusBar() {
+export function AccountStatusBoard() {
   return (
     <div class='w-1/2 px-7 rounded-lg bg-white flex flex-col justify-center gap-4'>
       <h1 class='font-bold text-lg'>Your account status</h1>
@@ -80,7 +80,7 @@ function AccountStatusBar() {
   )
 }
 
-function WelcomeBoard() {
+export function WelcomeBoard() {
   return (
     <div class='bg-white rounded-lg px-7 py-4 flex flex-col justify-center'>
       <h1 class='font-bold text-lg'>Thank you and Welcome!</h1>
@@ -92,16 +92,16 @@ function WelcomeBoard() {
   )
 }
 
-const CalendarWindow = (text) => {
-  return (
-    <div class='h-16 w-16 bg-secondary border-secondary border rounded flex flex-col justify-center items-center'>
-      <span class='text-xl'>00</span>
-      <span class='text-sm text-[#909090] font-bold'>{text}</span>
-    </div>
-  )
-}
+export function ProgressBoard() {
+  const calendarWindow = (text) => {
+    return (
+      <div class='h-16 w-16 bg-secondary border-secondary border rounded flex flex-col justify-center items-center'>
+        <span class='text-xl'>00</span>
+        <span class='text-sm text-[#909090] font-bold'>{text}</span>
+      </div>
+    )
+  }
 
-function ProgressBoard() {
   return (
     <div class='bg-white rounded-lg px-7 py-6 flex flex-col justify-center'>
       <h1 class='font-bold text-lg'>Token sales progress</h1>
@@ -130,28 +130,12 @@ function ProgressBoard() {
       <div class='flex flex-col pt-6 gap-2'>
         <span class='text-sm text-[#909090] font-bold'>SALES END IN</span>
         <div class='flex gap-2'>
-          {CalendarWindow('DAY')}
-          {CalendarWindow('HOUR')}
-          {CalendarWindow('MIN')}
-          {CalendarWindow('SEC')}
+          {calendarWindow('DAY')}
+          {calendarWindow('HOUR')}
+          {calendarWindow('MIN')}
+          {calendarWindow('SEC')}
         </div>
       </div>
     </div>
   )
 }
-
-const Dashboard = () => {
-  return (
-    <div class='w-[1144px] gap-4 flex flex-col justify-center pt-4'>
-      <TokenBalancePanel />
-      <div class='h-[176px] gap-4 flex flex-row justify-between'>
-        <ICOStatusBoard />
-        <AccountStatusBar />
-      </div>
-      <WelcomeBoard />
-      <ProgressBoard />
-    </div>
-  );
-}
-
-export default Dashboard;

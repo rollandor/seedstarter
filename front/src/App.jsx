@@ -1,13 +1,13 @@
-import { Navbar, Dashboard, Bottom } from "./components";
+import Navbar from "./components/Navbar";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
     <div class='min-h-screen w-[1144px] mx-auto'>
       <Navbar />
       <Dashboard />
-      {/* <Bottom /> */}
     </div>
   )
 }
 
-export default App
+export default App;
