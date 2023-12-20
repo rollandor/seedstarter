@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  TokenBalancePanel,
+  TokenBalanceBoard,
   ICOStatusBoard,
   AccountStatusBoard,
   WelcomeBoard,
@@ -9,9 +9,9 @@ import {
 
 const Dashboard = () => {
   return(
-    <div class='w-[1144px] gap-4 flex flex-col justify-center pt-4'>
-      <TokenBalancePanel />
-      <div class='h-[176px] gap-4 flex flex-row justify-between'>
+    <div class='w-[1144px] gap-4 flex flex-col justify-center'>
+      <TokenBalanceBoard />
+      <div class='h-44 gap-4 flex flex-row justify-between'>
         <ICOStatusBoard />
         <AccountStatusBoard />
       </div>

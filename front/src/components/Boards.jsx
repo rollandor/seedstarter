@@ -8,7 +8,7 @@ function Button(text) {
   )
 }
 
-export function TokenBalancePanel() {
+export function TokenBalanceBoard() {
   return (
     <div class='h-44 py-4 bg-[#8060C8] rounded-lg font-bold'>
 
@@ -47,7 +47,7 @@ export function TokenBalancePanel() {
 
 export function ICOStatusBoard() {
   return (
-    <div class='px-7 w-1/2 gap-4 rounded-lg bg-white flex flex-col justify-center'>
+    <div class='px-7 py-4 w-full rounded-lg bg-white flex flex-col justify-center gap-4'>
       <div class='flex items-center'>
         <h1 class='font-bold text-lg'>ICO Round 1</h1>
         <span class='bg-[#8060C8] py-1 px-2 ml-2 text-white rounded-lg'>TBA</span>
@@ -66,7 +66,7 @@ export function ICOStatusBoard() {
 
 export function AccountStatusBoard() {
   return (
-    <div class='w-1/2 px-7 rounded-lg bg-white flex flex-col justify-center gap-4'>
+    <div class='px-7 py-4 w-full rounded-lg bg-white flex flex-col justify-center gap-4'>
       <h1 class='font-bold text-lg'>Your account status</h1>
       <div>
         <span class='bg-[#40E060] text-white rounded-lg px-2 py-2 font-bold'>Email verified</span>

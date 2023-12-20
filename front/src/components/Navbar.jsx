@@ -16,7 +16,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav class='w-full h-32 bg-white flex justify-between'>
+    <nav class='w-full h-32 bg-white flex justify-between mb-4'>
       <div class='w-4/5 flex flex-col justify-between'>
         <img class='w-[245px] pt-8 pl-7' src='src/assets/menu_logo_green.svg'/>
         <ul class='h-10 text-[#8060C8] flex justify-around items-center'>
