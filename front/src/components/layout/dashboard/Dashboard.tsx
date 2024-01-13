@@ -1,4 +1,10 @@
+"use client"
+
 import React from "react"
+import styles from "@/components/layout/dashboard/Dashboard.module.scss"
+import Modal from "../modal/Modal"
+import { PaymentProcess } from "../payment/PaymentProcess"
+import { useState } from "react"
 
 function Button(text: string) {
   return (
@@ -185,6 +191,8 @@ export function CurrentPrice() {
 }
 
 export function AmountContribution() {
+  const [modalActive, setModalActive] = useState(true);
+
   return(
     <div className='px-4 py-4 flex flex-col'>
       <h1 className='font-bold text-lg'>Amount of contribution</h1>
@@ -212,7 +220,10 @@ export function AmountContribution() {
 
       <span className='py-4 text-sm text-[#A40000]'>Your contribution will be calculated based on exchange rate at the moment your transaction is confirmed.</span>
 
-      <button className='h-11 w-44 bg-secondary border-secondary border rounded-md inline-flex items-center justify-center py-3 px-4 text-center text-base font-bold bg-[#5AABFF] text-white hover:bg-[#0BB489] hover:border-[#0BB489] disabled:bg-gray-3 disabled:border-gray-3 disabled:text-dark-5'>Make payment</button>
+      <button className={styles['makePayment']} onClick={() => setModalActive(true)}>Make payment</button>
+      <Modal active={modalActive} setActive={setModalActive}>
+        <PaymentProcess />
+      </Modal>
 
       <div className='w-full h-0.5 my-4 bg-[#F5F5F5] rounded'></div>
 

@@ -1,8 +1,9 @@
 import React from "react";
+import styles from "@/components/layout/payment/PaymentProcess.module.scss"
 
 export function PaymentProcess() {
   return (
-    <div className='w-[600px] px-8 py-8 border rounded-lg bg-white'>
+    <div className={styles.payment}>
       <h1 className='font-bold text-lg text-[#4C3F67]'>Payment process</h1>
       <div>
         <span>Please make payment of </span>
@@ -37,7 +38,7 @@ export function PaymentProcess() {
       </button>
 
       <div className='py-4 text-[#606060] text-xs flex gap-2'>
-        <img src="./src/assets/info_icon_gray.svg" alt="info_icon" />
+        <img src="/info_icon_gray.svg" alt="info_icon" />
         <span>Our payment address will appear  or  redirect you for payment after order is placed.</span>
       </div>
 
