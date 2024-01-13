@@ -10,8 +10,8 @@ export const MENU = [
     icon: 'smth',
   },
   {
-    name: 'Transaction',
-    url: '/transaction',
+    name: 'Transactions',
+    url: '/transactions',
     icon: 'smth',
   },
   {
@@ -26,7 +26,7 @@ export const MENU = [
   },
   {
     name: 'Main site',
-    url: '/mainsite',
+    url: 'https://github.com/rollandor/seedstarter',
     icon: 'smth',
   },
 ]

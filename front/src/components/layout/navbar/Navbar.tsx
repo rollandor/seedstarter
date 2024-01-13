@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <div className='w-4/5 flex flex-col justify-between'>
-        <Image src='/menu_logo_green.svg' alt='' width={225} height={33} />
+        <img className='w-[245px] pt-8 pl-7' src='/menu_logo_green.svg'/>
         <ul className='h-10 text-[#8060C8] flex justify-around items-center'>
           {MENU.map(item => (
             <li key={item.url} className="px-4">
@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className='px-4 flex flex-col justify-center'>
         <div className='py-2 flex items-center'>
           <span className='text-[#0BB489]'>Welcome, User!</span>
-          <img className='px-4' src='src/assets/male_user.svg'/>
+          <img className='px-4' src='/male_user.svg'/>
         </div>
         {Button('Connect wallet')}
       </div>
