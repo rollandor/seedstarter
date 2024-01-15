@@ -1,16 +1,30 @@
+.fixed_top {
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  background-color: #ffffff;
+}
+
+.navbar {
+  // TODO: think about how can I except using that
+  // chunch because there is an opportunity to wrap 
+  // the all components into special layout but the
+  // navbar has to take up all the width of screen
+  margin-left: auto;
+  margin-right: auto;
+  width: 1200px;
+
+  display: flex;
+  margin-bottom: 16px; // TODO: remove! 
+  justify-content: space-between;
+  height: 8rem;
+}
+
 .navbar__logo {
   padding-left: 1.75rem;
   padding-top: 2rem;
   width: 245px;
-}
-
-.navbar {
-  display: flex;
-  margin-bottom: 16px;
-  justify-content: space-between;
-  width: 100%;
-  height: 8rem;
-  background-color: #ffffff;
 }
 
 .connect_wallet {

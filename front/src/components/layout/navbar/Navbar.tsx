@@ -66,62 +66,63 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Navbar */}
-      <nav className={styles['navbar']}>
-        <div className='w-4/5 flex flex-col justify-between'>
+      <div id="header" className={styles['fixed_top']}>
+        <header className={styles['navbar']}>
+          <div className='w-4/5 flex flex-col justify-between'>
 
-          {/* seedstarter logo */}
-          <div className={styles['navbar__logo']}>
-            <Link href={
-              // TODO: called more than one time 
-              MENU.filter(item => {
-                if (item.name === 'Main site') {
-                  console.log(item);
-                  return item;
-                }
-              })[0].url
-            }>
-              <img src='/menu_logo_green.svg' />
-            </Link>
+            {/* seedstarter logo */}
+            <div className={styles['navbar__logo']}>
+              <Link href={
+                // TODO: called more than one time 
+                MENU.filter(item => {
+                  if (item.name === 'Main site') {
+                    console.log(item);
+                    return item;
+                  }
+                })[0].url
+              }>
+                <img src='/menu_logo_green.svg' />
+              </Link>
+            </div>
+
+            <ul className={styles['navbar__list']}>
+              {MENU.map(item => (
+                <li key={item.url} className={styles['navbar__item']}>
+                  <Link href={item.url}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <ul className={styles['navbar__list']}>
-            {MENU.map(item => (
-              <li key={item.url} className={styles['navbar__item']}>
-                <Link href={item.url}>{item.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+          <div className='px-4 flex flex-col justify-center'>
+            <div className='py-2 flex items-center'>
+              <span className='text-[#0BB489]'>Welcome, User!</span>
+              <img className='px-4' src='/male_user.svg' />
+            </div>
 
-        <div className='px-4 flex flex-col justify-center'>
-          <div className='py-2 flex items-center'>
-            <span className='text-[#0BB489]'>Welcome, User!</span>
-            <img className='px-4' src='/male_user.svg' />
-          </div>
-
-          {/* ---- */}
-          <p>
-            {!haveMetamask ? (
-              <Metamask />
-            ) : client.isConnected ? (
-              <button className={styles['connect_wallet']} >
-                {client.address.slice(0, 4)}...
-                {client.address.slice(38, 42)}
-              </button>
-            ) : (
-              <>
-                <br />
-                <button className={styles['connect_wallet']} onClick={connectWeb3}>
-                  Connect Wallet
+            {/* ---- */}
+            <p>
+              {!haveMetamask ? (
+                <Metamask />
+              ) : client.isConnected ? (
+                <button className={styles['connect_wallet']} >
+                  {client.address.slice(0, 4)}...
+                  {client.address.slice(38, 42)}
                 </button>
-              </>
-            )}
-          </p>
+              ) : (
+                <>
+                  <br />
+                  <button className={styles['connect_wallet']} onClick={connectWeb3}>
+                    Connect Wallet
+                  </button>
+                </>
+              )}
+            </p>
+          </div>
 
-        </div>
-      </nav>
-      {/* Navbar end */}
+        </header>
+
+      </div>
     </>
   )
 };

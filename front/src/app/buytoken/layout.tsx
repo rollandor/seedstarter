@@ -1,4 +1,5 @@
 import Navbar from "@/components/layout/navbar/Navbar";
+import ContentLayout from "@/components/layout/contentLayout";
 
 export default function BuytokenLayout({
   children, // will be a page or nested layout
@@ -8,8 +9,9 @@ export default function BuytokenLayout({
   return (
     <section>
       <Navbar />
- 
-      {children}
+      <ContentLayout>
+        {children}
+      </ContentLayout>
     </section>
   )
 }
