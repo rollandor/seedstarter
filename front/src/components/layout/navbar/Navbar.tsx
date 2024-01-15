@@ -66,12 +66,24 @@ const Navbar = () => {
 
   return (
     <>
-    {/* Navbar */}
+      {/* Navbar */}
       <nav className={styles['navbar']}>
         <div className='w-4/5 flex flex-col justify-between'>
 
           {/* seedstarter logo */}
-          <img className='w-[245px] pt-8 pl-7' src='/menu_logo_green.svg' />
+          <div className={styles['navbar__logo']}>
+            <Link href={
+              // TODO: called more than one time 
+              MENU.filter(item => {
+                if (item.name === 'Main site') {
+                  console.log(item);
+                  return item;
+                }
+              })[0].url
+            }>
+              <img src='/menu_logo_green.svg' />
+            </Link>
+          </div>
 
           <ul className={styles['navbar__list']}>
             {MENU.map(item => (
