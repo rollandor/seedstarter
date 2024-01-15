@@ -67,12 +67,15 @@ const Navbar = () => {
   return (
     <>
     {/* Navbar */}
-      <nav className={styles.navbar}>
+      <nav className={styles['navbar']}>
         <div className='w-4/5 flex flex-col justify-between'>
+
+          {/* seedstarter logo */}
           <img className='w-[245px] pt-8 pl-7' src='/menu_logo_green.svg' />
-          <ul className='h-10 text-[#8060C8] flex justify-around items-center'>
+
+          <ul className={styles['navbar__list']}>
             {MENU.map(item => (
-              <li key={item.url} className="px-4">
+              <li key={item.url} className={styles['navbar__item']}>
                 <Link href={item.url}>{item.name}</Link>
               </li>
             ))}
