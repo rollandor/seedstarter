@@ -2,8 +2,8 @@ import React from "react";
 import styles from "@/components/layout/modal/Modal.module.scss"
 
 type Prop = {
-  active: any,
-  setActive: any,
+  active: boolean,
+  setActive: Function,
   children: any,
 }
 

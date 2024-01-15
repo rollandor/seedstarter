@@ -191,7 +191,7 @@ export function CurrentPrice() {
 }
 
 export function AmountContribution() {
-  const [modalActive, setModalActive] = useState(true);
+  const [paymentActive, setPaymentActive] = useState(false);
 
   return(
     <div className='px-4 py-4 flex flex-col'>
@@ -220,8 +220,10 @@ export function AmountContribution() {
 
       <span className='py-4 text-sm text-[#A40000]'>Your contribution will be calculated based on exchange rate at the moment your transaction is confirmed.</span>
 
-      <button className={styles['makePayment']} onClick={() => setModalActive(true)}>Make payment</button>
-      <Modal active={modalActive} setActive={setModalActive}>
+      <button className={styles['makePayment']} onClick={() => setPaymentActive(true)}>
+        Make payment
+      </button>
+      <Modal active={paymentActive} setActive={setPaymentActive}>
         <PaymentProcess />
       </Modal>
 
