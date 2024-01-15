@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
+import { link } from 'fs'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Seedstarter',
-  description: 'ICO 2024',
+  description: 'Decentralized private investors venture fund',
+  icons: '/favicon_io/favicon-32x32.png',
 }
 
 export default function RootLayout({
