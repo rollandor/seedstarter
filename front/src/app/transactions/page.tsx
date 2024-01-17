@@ -1,5 +1,9 @@
+import Sandbox from "@/components/layout/sandbox/Sandbox"
+
 export default function Transactions() {
   return (
-    <div>Transactions page</div>
+    <div>
+      <Sandbox />
+    </div>
   )
 }
