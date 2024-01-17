@@ -1,10 +1,10 @@
 import React from "react";
+import TokenBalanceBoard from "@/components/layout/dashboard/TokenBalanceBoard";
+import TokenSalesBoard from "@/components/layout/dashboard/TokenSalesBoard";
 import {
-  TokenBalanceBoard,
   ICOStatusBoard,
   AmountContribution,
   CurrentPrice,
-  ProgressBoard,
 } from "@/components/layout/dashboard/Dashboard";
 
 export default function Buytoken() {
@@ -17,7 +17,7 @@ export default function Buytoken() {
       <div className='w-2/5 flex flex-col gap-4'>
         <TokenBalanceBoard />
         <ICOStatusBoard />
-        <ProgressBoard />
+        <TokenSalesBoard />
       </div>
 
     </div>

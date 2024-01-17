@@ -1,10 +1,10 @@
 import React from "react";
+import TokenBalanceBoard from "@/components/layout/dashboard/TokenBalanceBoard";
+import TokenSalesBoard from "@/components/layout/dashboard/TokenSalesBoard";
 import {
-  TokenBalanceBoard,
   ICOStatusBoard,
   AccountStatusBoard,
   WelcomeBoard,
-  ProgressBoard,
 } from "@/components/layout/dashboard/Dashboard";
 
 export default function Dashboard() {
@@ -16,7 +16,7 @@ export default function Dashboard() {
         <AccountStatusBoard />
       </div>
       <WelcomeBoard />
-      <ProgressBoard />
+      <TokenSalesBoard />
     </div>
   )
 }
