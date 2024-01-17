@@ -76,7 +76,7 @@ const Navbar = () => {
                 // TODO: called more than one time 
                 MENU.filter(item => {
                   if (item.name === 'Main site') {
-                    console.log(item);
+                    // console.log(item);
                     return item;
                   }
                 })[0].url

@@ -3,8 +3,6 @@
 import React from "react"
 import styles from "@/components/layout/dashboard/Dashboard.module.scss"
 import Modal from "../modal/Modal"
-import { PaymentProcess } from "../payment/PaymentProcess"
-import { useState } from "react"
 
 function Button(text: string) {
   return (
@@ -103,51 +101,6 @@ export function CurrentPrice() {
         </div>
 
       </div>
-    </div>
-  )
-}
-
-export function AmountContribution() {
-  const [paymentActive, setPaymentActive] = useState(false);
-
-  return(
-    <div className='px-4 py-4 flex flex-col'>
-      <h1 className='font-bold text-lg'>Amount of contribution</h1>
-      <span className='pb-4 text-[#606060]'>Enter the amount of SDS tokens that you want to buy. The calculator below helps to convert the required quantity of tokens into the amount of your selected currency</span>
-
-      <div className='gap-4 flex items-center'>
-        <input type="text" className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-blue-500 focus:border-blue-500 w-24 p-2.5 " placeholder="0" required></input>
-        <span>=</span>
-        <div className='flex flex-col items-center'>
-          <span>0</span>
-          <span>USD</span>
-        </div>
-      </div>
-
-      <div className='py-4 text-[#606060] text-sm flex gap-2'>
-        <img src="/info_icon_gray.svg" alt="info_icon" />
-        <span className='font-bold'>250.000000 USDT (250.0000 SDS)</span>
-        <span>Minimum contribution amount is required</span>
-      </div>
-
-      <div className='h-24 px-8 border rounded-lg flex flex-col justify-center'>
-        <span className='font-bold'>TOTAL SDS</span>
-        <span className='text-[#8060C8] text-lg font-bold'>0</span>
-      </div>
-
-      <span className='py-4 text-sm text-[#A40000]'>Your contribution will be calculated based on exchange rate at the moment your transaction is confirmed.</span>
-
-      <button className={styles['makePayment']} onClick={() => setPaymentActive(true)}>
-        Make payment
-      </button>
-      <Modal active={paymentActive} setActive={setPaymentActive}>
-        <PaymentProcess />
-      </Modal>
-
-      <div className='w-full h-0.5 my-4 bg-[#F5F5F5] rounded'></div>
-
-      <span className='text-sm text-[#909090]'>Tokens will appear in your account after payment successfully made and approved by our team. Please note that SDS token will be distributed after the token sales and-date.</span>
-
     </div>
   )
 }

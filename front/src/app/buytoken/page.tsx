@@ -1,9 +1,9 @@
 import React from "react";
 import TokenBalanceBoard from "@/components/layout/dashboard/TokenBalanceBoard";
 import TokenSalesBoard from "@/components/layout/dashboard/TokenSalesBoard";
+import AmountContribution from "@/components/layout/dashboard/AmountContribution";
 import {
   ICOStatusBoard,
-  AmountContribution,
   CurrentPrice,
 } from "@/components/layout/dashboard/Dashboard";
 
