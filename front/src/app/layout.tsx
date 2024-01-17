@@ -1,9 +1,15 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.scss'
-import { link } from 'fs'
 
 const inter = Inter({ subsets: ['latin'] })
+
+declare global {
+  interface Window {
+    // ethereum: import('ethers').providers.ExternalProvider;
+    ethereum: any;
+  }
+}
 
 export const metadata: Metadata = {
   title: 'Seedstarter',
