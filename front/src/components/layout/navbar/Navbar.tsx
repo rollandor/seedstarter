@@ -111,7 +111,6 @@ const Navbar = () => {
                 </button>
               ) : (
                 <>
-                  <br />
                   <button className={styles['connect_wallet']} onClick={connectWeb3}>
                     Connect Wallet
                   </button>
