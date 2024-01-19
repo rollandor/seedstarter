@@ -4,6 +4,7 @@ import React from "react";
 import styles from '@/components/layout/navbar/Navbar.module.scss'
 import { MENU } from "./Navbar.data";
 import { useState, useEffect } from "react";
+import { Suspense } from "react";
 import Link from "next/link";
 
 const Navbar = () => {
@@ -57,6 +58,17 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    const {ethereum}: any = window;
+    if (ethereum) {
+      // added handler for listen metamask event
+      // https://docs.metamask.io/wallet/reference/provider-api/#accountschanged
+      window.ethereum.on('accountsChanged', async () => {
+        console.log('changed accounts state!');
+        checkConnection();
+        return
+      })
+    }
+
     checkConnection();
   }, []);
 
@@ -105,9 +117,11 @@ const Navbar = () => {
                 </button>
               ) : (
                 <>
-                  <button className={styles['connect_wallet']} onClick={connectWeb3}>
-                    Connect Wallet
-                  </button>
+                  <Suspense fallback="Processin...">
+                    <button className={styles['connect_wallet']} onClick={connectWeb3}>
+                      Connect Wallet
+                    </button>
+                  </Suspense>
                 </>
               ) : (
                 <p className={styles['connect_wallet']}>
