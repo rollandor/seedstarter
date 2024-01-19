@@ -6,10 +6,31 @@ import { useState, useEffect } from "react";
 
 function TokenBalanceBoard() {
   const [haveMetamask, setHaveMetamask] = useState(false);
+  const [client, setClient] = useState({
+    isConnected: false,
+  })
 
   const checkConnection = async () => {
     const { ethereum }: any = window;
-    ethereum ? setHaveMetamask(true) : setHaveMetamask(false)
+    if (ethereum) {
+      setHaveMetamask(true);
+      try {
+        const accounts = await ethereum.request({ method: "eth_accounts" });
+        if (accounts.length > 0) {
+          setClient({
+            isConnected: true,
+          });
+        } else {
+          setClient({
+            isConnected: false,
+          });
+        }
+      } catch (error) {
+        console.error("failed to get accounts: " + error)
+      }
+    } else {
+      setHaveMetamask(false);
+    }
   };
 
   useEffect(() => {
@@ -24,13 +45,17 @@ function TokenBalanceBoard() {
         <div className='w-1/2 h-12 ml-4 flex flex-col justify-between'>
           <span className='text-[#40E060]'>TOKEN BALANCE</span>
           <div className="text-white">
-            {haveMetamask ? (
+            {/* {haveMetamask ? (
               <Suspense fallback="Processing...">
-                <span>{getBalanceOf(getCurrentAddress())} SDS</span>
+                {client.isConnected ? (
+                  <span>{getBalanceOf(getCurrentAddress())} SDS</span>
+                ) : (
+                  <></>
+                )}
               </Suspense>
             ) : (
               <></>
-            )}
+            )} */}
           </div>
         </div>
       </div>
