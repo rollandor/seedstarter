@@ -1,14 +1,10 @@
 "use client"
 
-import Image from "next/image";
 import React from "react";
 import styles from '@/components/layout/navbar/Navbar.module.scss'
 import { MENU } from "./Navbar.data";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
-import Metamask from "@/components/metamask/metamask";
-import { signMessage } from "@/components/metamask/sign"
 
 const Navbar = () => {
   const [haveMetamask, setHaveMetamask] = useState(true);
@@ -101,10 +97,8 @@ const Navbar = () => {
             </div>
 
             {/* ---- */}
-            <p>
-              {!haveMetamask ? (
-                <Metamask />
-              ) : client.isConnected ? (
+            <div>
+              {haveMetamask ? client.isConnected ? (
                 <button className={styles['connect_wallet']} >
                   {client.address.slice(0, 4)}...
                   {client.address.slice(38, 42)}
@@ -115,8 +109,12 @@ const Navbar = () => {
                     Connect Wallet
                   </button>
                 </>
+              ) : (
+                <p className={styles['connect_wallet']}>
+                  Turn on Metamask
+                </p>
               )}
-            </p>
+            </div>
           </div>
 
         </header>

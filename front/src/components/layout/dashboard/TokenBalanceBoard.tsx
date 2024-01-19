@@ -2,8 +2,20 @@
 
 import { Suspense } from "react";
 import { getCurrentAddress, getBalanceOf } from "@/components/metamask/contract";
+import { useState, useEffect } from "react";
 
 function TokenBalanceBoard() {
+  const [haveMetamask, setHaveMetamask] = useState(false);
+
+  const checkConnection = async () => {
+    const { ethereum }: any = window;
+    ethereum ? setHaveMetamask(true) : setHaveMetamask(false)
+  };
+
+  useEffect(() => {
+    checkConnection();
+  }, []);
+
   return (
     <div className='h-44 py-4 bg-[#8060C8] rounded-lg font-bold'>
 
@@ -12,12 +24,12 @@ function TokenBalanceBoard() {
         <div className='w-1/2 h-12 ml-4 flex flex-col justify-between'>
           <span className='text-[#40E060]'>TOKEN BALANCE</span>
           <div className="text-white">
-            {window.ethereum.isConnected() ? (
+            {haveMetamask ? (
               <Suspense fallback="Processing...">
                 <span>{getBalanceOf(getCurrentAddress())} SDS</span>
               </Suspense>
             ) : (
-              <span>No metamask</span>
+              <></>
             )}
           </div>
         </div>
