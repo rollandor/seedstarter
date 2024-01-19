@@ -1,10 +1,6 @@
 import { ethers } from "ethers"
 import { SeedstarterABI } from "@/components/metamask/contractABI"
 
-const DAI_ADDRESS = "0x69e458B75fe17869F2E72AE2E9DC8A441F28d6B8"
-const DAI_DECIMALS = 18
-const SEPOLIA_RPC_URL = "https://1rpc.io/sepolia"
-
 const BALANCEOF_ABI = [
   {
     inputs: [
@@ -30,44 +26,66 @@ const BALANCEOF_ABI = [
 let provider = null;
 let signer = null;
 
+/**
+ * Returns the total supply
+ * Calculate without Metamask
+ */
 export async function getTotalSupply() {
-  if (provider == null) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
+  try {
+    const rpcProvider = new ethers.providers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
+    const daiContract = new ethers.Contract(process.env.DAI_ADDRESS, SeedstarterABI, rpcProvider);
+    const totalSupply = await daiContract.totalSupply() / 1e18;
+
+    console.log("total supply = " + totalSupply)
+
+    return totalSupply;
+  } catch (error) {
+    console.error("failed to get total supply: " + error)
+    return -1
   }
-
-  const daiContract = new ethers.Contract(DAI_ADDRESS, SeedstarterABI, provider);
-  const totalSupply = await daiContract.totalSupply() / 1e18;
-
-  return totalSupply;
 }
 
 /**
  * Returns remaining token part of the total supply
+ * Calculate without Metamask
  */
 export async function getAmountSaledTokens() {
-  if (provider == null) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
+  try {
+    const rpcProvider = new ethers.providers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL)
+
+    const daiContract = new ethers.Contract(process.env.DAI_ADDRESS, SeedstarterABI, rpcProvider);
+    const totalSupply = await daiContract.totalSupply() / 1e18;
+
+    const owner = await daiContract.owner();
+    const ownerBalance = parseFloat(
+      ethers.utils.formatUnits(
+        await daiContract.balanceOf(owner), 18
+      )
+    );
+
+    console.log("amount of saled tokens = " + (totalSupply - ownerBalance))
+
+    return totalSupply - ownerBalance;
+  } catch (error) {
+    console.error("failed to get amount of saled tokens: " + error)
+    return -1
   }
-
-  const daiContract = new ethers.Contract(DAI_ADDRESS, SeedstarterABI, provider);
-  const totalSupply = await daiContract.totalSupply() / 1e18;
- 
-  const owner = await daiContract.owner();
-  const ownerBalance = parseFloat(
-    ethers.utils.formatUnits(
-      await daiContract.balanceOf(owner), 18
-    )
-  );
-
-  return totalSupply - ownerBalance;
 }
 
 export async function sandbox() {
+  // -----------------------
+  // check web3 section
+  // -----------------------
+  const { ethereum } = window;
+  if (!ethereum) {
+    console.error("ethereum var not found, install metamask extension")
+    return -1
+  }
   if (provider == null) {
-    provider = new ethers.providers.Web3Provider(window.ethereum);
+    provider = new ethers.providers.Web3Provider(ethereum);
   }
 
-  const daiContract = new ethers.Contract(DAI_ADDRESS, SeedstarterABI, provider);
+  const daiContract = new ethers.Contract(process.env.DAI_ADDRESS, SeedstarterABI, provider);
 
   const name = await daiContract.name();
   console.log("name = " + name);
@@ -86,7 +104,17 @@ export async function getAllAccounts() {
 }
 
 export async function getCurrentAddress() {
-  provider = new ethers.providers.Web3Provider(window.ethereum)
+  // -----------------------
+  // check web3 section
+  // -----------------------
+  const { ethereum } = window;
+  if (!ethereum) {
+    console.error("ethereum var not found, install metamask extension")
+    return -1
+  }
+  if (provider == null) {
+    provider = new ethers.providers.Web3Provider(ethereum);
+  }
 
   let accounts = await provider.send("eth_requestAccounts", []);
   let account = accounts[0];
@@ -95,13 +123,13 @@ export async function getCurrentAddress() {
 }
 
 export async function getBalanceOf(address) {
-  const rpcProvider = new ethers.providers.JsonRpcProvider(SEPOLIA_RPC_URL)
-  const DAI = new ethers.Contract(DAI_ADDRESS, BALANCEOF_ABI, rpcProvider)
+  const rpcProvider = new ethers.providers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL)
+  const DAI = new ethers.Contract(process.env.DAI_ADDRESS, BALANCEOF_ABI, rpcProvider)
 
   const DAIBalanceBigInt = await DAI.balanceOf(address)
   const DAIBalanceNumber = ethers.utils.formatUnits(
     DAIBalanceBigInt.toString(),
-    DAI_DECIMALS
+    process.env.DAI_DECIMALS
   )
 
   return DAIBalanceNumber
