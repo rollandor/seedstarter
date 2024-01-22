@@ -1,15 +1,26 @@
 "use client"
 
-import React, { SyntheticEvent } from "react"
+import React from "react"
 import styles from "@/components/layout/dashboard/ExchangeRate.module.scss";
 import { ExchangeRatesArray } from "@/components/layout/dashboard/ExchangeRates";
 import { useState, Fragment } from "react";
 
-function ExchangeRates() {
+interface UserInputState {
+  id: string,
+  setId: React.Dispatch<React.SetStateAction<string>>,
+}
+
+function ExchangeRates({id, setId}: UserInputState) {
   const [active, setActive] = useState('');
   const handleClick = (event: any) => {
-    console.log(event.target);
-    setActive(event.target.id)
+    console.log('passing id = %s; target id = %d', id, event.target.id);
+    if ( active != event.target.id ) {
+      setId(event.target.id);
+      setActive(event.target.id);
+    } else {
+      setId('');
+      setActive('');
+    }
   }
 
   const exchangeRateButton = (

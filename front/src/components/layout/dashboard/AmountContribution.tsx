@@ -7,7 +7,12 @@ import { PaymentProcess } from "../payment/PaymentProcess";
 const SDS_USDT_EXCHANGE_RATE = 0.000253;  // 1 SDS = 0.000253 USDT
 const USDT_SDS_EXCHANGE_RATE = 1 / SDS_USDT_EXCHANGE_RATE;
 
-function AmountContribution() {
+interface UserInputState {
+  id: string,
+  setId: React.Dispatch<React.SetStateAction<string>>,
+}
+
+function AmountContribution({id, setId}: UserInputState) {
   const [paymentActive, setPaymentActive] = useState(false);
   const [amount, setAmount] = useState('');
 
@@ -23,9 +28,10 @@ function AmountContribution() {
 
         <div className='gap-4 flex items-center'>
           <input
-            className={styles['inputbox__amount']}
+            className={ id == '' ? styles['inputbox__amount'] + " " + styles.disabled : styles['inputbox__amount']}
             placeholder="0"
             value={amount}
+            disabled={ id == '' ? true : false }
             onChange={(e) => {
               setAmount(e.target.value);
             }}
