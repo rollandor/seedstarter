@@ -1,11 +1,39 @@
-"use client"
+'use client';
+
 import { useState } from "react";
 import styles from "@/components/layout/dashboard/AmountContribution.module.scss";
 import Modal from "../modal/Modal";
 import { PaymentProcess } from "../payment/PaymentProcess";
+import { ExchangeRatesArray } from "./ExchangeRates";
 
-const SDS_USDT_EXCHANGE_RATE = 0.000253;  // 1 SDS = 0.000253 USDT
-const USDT_SDS_EXCHANGE_RATE = 1 / SDS_USDT_EXCHANGE_RATE;
+
+
+function calculateCost(
+  idCurrecy: string,
+  inAmount: string,
+  amount: number,
+  setAmount: Function
+): number {
+  if (idCurrecy == '' || inAmount == '') {
+    return 0
+  }
+  const am = parseFloat(inAmount);
+  const rate = ExchangeRatesArray.filter(item => {
+    if (item.key == idCurrecy) return item;
+  })[0].value
+
+  const res = am * rate;
+  if (amount != res) {
+    // because every calling setter of any state component
+    // trigger re-render so I have to compare before state
+    // with after
+    setAmount(res);
+    console.log('final amount = %f', res);
+  }
+
+  return res;
+}
+
 
 interface UserInputState {
   id: string,
@@ -13,8 +41,9 @@ interface UserInputState {
 }
 
 function AmountContribution({id, setId}: UserInputState) {
-  const [paymentActive, setPaymentActive] = useState(false);
-  const [amount, setAmount] = useState('');
+  const [paymentActive, setPaymentActive] = useState<boolean>(false);
+  const [inputAmount, setInputAmount] = useState<string>('');
+  const [amount, setAmount] = useState<number>(0);
 
   return (
     <>
@@ -30,10 +59,10 @@ function AmountContribution({id, setId}: UserInputState) {
           <input
             className={ id == '' ? styles['inputbox__amount'] + " " + styles.disabled : styles['inputbox__amount']}
             placeholder="0"
-            value={amount}
+            value={inputAmount}
             disabled={ id == '' ? true : false }
             onChange={(e) => {
-              setAmount(e.target.value);
+              setInputAmount(e.target.value);
             }}
             type="number"
           />
@@ -46,9 +75,9 @@ function AmountContribution({id, setId}: UserInputState) {
         </div>
 
         <div className='h-24 px-8 border rounded-lg flex flex-col justify-center'>
-          <span className='font-bold'>TOTAL SDS</span>
+          <span className='font-bold'>TOTAL</span>
           <span className='text-[#8060C8] text-lg font-bold'>
-            {amount != '' ? (parseFloat(amount) * USDT_SDS_EXCHANGE_RATE).toFixed(2) : '0'}
+            {inputAmount != '' ? calculateCost(id, inputAmount, amount, setAmount).toFixed(8) : '' }
           </span>
         </div>
 
