@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "@/components/layout/dashboard/AmountContribution.module.scss";
 import Modal from "../modal/Modal";
-import { PaymentProcess } from "../payment/PaymentProcess";
+import PaymentProcess from "../payment/PaymentProcess";
 import { ExchangeRatesArray } from "./ExchangeRates";
 
 
