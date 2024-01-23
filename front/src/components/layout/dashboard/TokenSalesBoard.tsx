@@ -1,17 +1,18 @@
-"use client"
-
-import { Suspense } from "react";
+import styles from "@/components/layout/dashboard/TokenSalesBoard.module.scss"
 import { getAmountSaledTokens, getTotalSupply } from "@/components/metamask/contract";
 
-export function TokenSalesBoard() {
+async function TokenSalesBoard() {
   const calendarWindow = (text: string) => {
     return (
-      <div className='h-16 w-16 bg-secondary border-secondary border rounded flex flex-col justify-center items-center'>
+      <div className={styles['calendar__item']}>
         <span className='text-xl'>00</span>
         <span className='text-sm text-[#909090] font-bold'>{text}</span>
       </div>
     )
   }
+
+  // const amountTokens = await getAmountSaledTokens();
+  // const totalSupply = await getTotalSupply();
 
   return (
     <div className='bg-white rounded-lg px-7 py-6 flex flex-col justify-center'>
@@ -19,20 +20,17 @@ export function TokenSalesBoard() {
 
       <div className="flex justify-between mb-1">
         <div className='text-sm text-[#909090] font-bold py-2 flex flex-col'>
-          <Suspense fallback="Processing...">
-            <span>RAISED AMOUNT</span>
-            <span>{getAmountSaledTokens()} SDS</span>
-          </Suspense>
+          <span>RAISED AMOUNT</span>
+          {/* <span>{amountTokens} SDS</span> */}
         </div>
 
         <div className='text-sm text-[#909090] font-bold py-2 flex flex-col items-end'>
-          <Suspense>
-            <span>TOTAL TOKEN SUPPLY</span>
-            <span>{getTotalSupply()} SDS</span>
-          </Suspense>
+          <span>TOTAL TOKEN SUPPLY</span>
+          {/* <span>{totalSupply} SDS</span> */}
         </div>
       </div>
 
+      {/* slider */}
       <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#909090]">
         <div className="bg-[#8251DE] h-2.5 w-[25%] rounded-full"></div>
       </div>
