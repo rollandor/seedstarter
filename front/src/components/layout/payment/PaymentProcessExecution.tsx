@@ -1,17 +1,16 @@
 import React from "react";
 import styles from "@/components/layout/payment/PaymentProcess.module.scss"
-import { PaymentStates, ArgsType } from "./PaymentProcess";
+import { PaymentStates, ArgsType, PaymentProcessContext } from "./PaymentProcess";
+import { useContext } from "react";
 import { OutViaWallet } from "./PaymentProcessOffer";
-
 
 function PaymentProcessExecution({ 
   amountSDS,
   finalCost,
   nameCurrency,
-  state,
-  setState,
 }: ArgsType) {
   const numOrder = '000003';
+  const {state, setState} = useContext(PaymentProcessContext);
 
   return (
     <div className={styles['payment']}>

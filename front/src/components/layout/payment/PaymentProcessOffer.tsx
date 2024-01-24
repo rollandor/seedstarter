@@ -1,9 +1,9 @@
 'use client';
 
-import React from "react";
+import React, { useContext } from "react";
 import styles from "@/components/layout/payment/PaymentProcess.module.scss"
 import { useState } from "react";
-import { PaymentStates, ArgsType } from "./PaymentProcess";
+import { PaymentStates, ArgsType, PaymentProcessContext } from "./PaymentProcess";
 
 
 enum PayMethods {
@@ -44,10 +44,9 @@ function PaymentProcessOffer({
   amountSDS,
   finalCost,
   nameCurrency,
-  state,
-  setState,
 }: ArgsType) {
 
+  const {state, setState} = useContext(PaymentProcessContext);
   const [method, setMethod] = useState<PayMethods>(PayMethods.None);
 
   return (

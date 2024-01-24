@@ -1,14 +1,16 @@
 import React from "react";
 import styles from "@/components/layout/payment/PaymentProcess.module.scss"
-import { PaymentStates, ArgsType } from "./PaymentProcess";
+import { PaymentStates, ArgsType, PaymentProcessContext } from "./PaymentProcess";
+import { useContext } from "react";
 
 function PaymentProcessSuccess({
   amountSDS,
   finalCost,
   nameCurrency,
-  state,
-  setState,
 }: ArgsType) {
+
+  const {state, setState} = useContext(PaymentProcessContext);
+
   return(
     <div className={styles['payment']}>
       <div className="p-10 flex flex-col gap-4 justify-center text-center items-center text-[#252525]">
