@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.17.19",
     "ethers": "5.4",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "sass": "^1.69.5"
+    "sass": "^1.69.5",
+    "viem": "^2.5.0",
+    "wagmi": "^2.5.1"
   },
   "devDependencies": {
     "@types/node": "^20",

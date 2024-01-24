@@ -8,8 +8,6 @@ export default function ProfileLayout({
 }) {
   return (
     <section>
-      <Navbar />
- 
       <ContentLayout>
         {children}
       </ContentLayout>
