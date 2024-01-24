@@ -3,11 +3,20 @@
 import React from "react";
 import styles from "@/components/layout/payment/PaymentProcess.module.scss"
 import { useState } from "react";
+import { setTotalSupply } from "@/components/metamask/contract";
 
 enum PayMethods {
   Wallet = 'wallet',
   Echange = 'exchange',
   None = '',
+}
+
+export enum PaymentStates {
+  Offering,
+  Execution,
+  Success,
+  Failed,
+  Undefined,
 }
 
 function OutViaWallet() {
@@ -39,12 +48,21 @@ function OutViaExchange() {
 }
 
 interface ArgsType {
-  amountSDS?: number,
-  finalCost?: number,
-  nameCurrency?: string,
+  amountSDS: number,
+  finalCost: number,
+  nameCurrency: string,
+  state: PaymentStates,
+  setState: React.Dispatch<React.SetStateAction<PaymentStates>>,
 };
 
-function PaymentProcessOffer({ amountSDS, finalCost }: ArgsType) {
+function PaymentProcessOffer({ 
+  amountSDS,
+  finalCost,
+  nameCurrency,
+  state,
+  setState,
+}: ArgsType) {
+
   const [method, setMethod] = useState<PayMethods>(PayMethods.None);
 
   return (
@@ -128,7 +146,12 @@ function PaymentProcessOffer({ amountSDS, finalCost }: ArgsType) {
         </label>
       </div>
 
-      <button className={styles['button__buy_token']}>
+      <button 
+        className={styles['button__buy_token']}
+        onClick={() => {
+          setState(PaymentStates.Execution);
+        }}
+      >
         Buy token now
         <img src="/arrow_to_right.svg" alt="" className="pl-4 pointer-events-none" />
       </button>
@@ -142,7 +165,13 @@ function PaymentProcessOffer({ amountSDS, finalCost }: ArgsType) {
   )
 }
 
-function PaymentProcessExecution({ amountSDS, finalCost, nameCurrency }: ArgsType) {
+function PaymentProcessExecution({ 
+  amountSDS,
+  finalCost,
+  nameCurrency,
+  state,
+  setState,
+}: ArgsType) {
   const numOrder = '000003';
 
   return (
@@ -181,11 +210,21 @@ function PaymentProcessExecution({ amountSDS, finalCost, nameCurrency }: ArgsTyp
         <OutViaWallet />
 
         <div className="flex py-2 gap-4">
-          <button className={styles['button__buy_token']}>
+          <button 
+            className={styles['button__buy_token']}
+            onClick={() => {
+              setState(PaymentStates.Success);
+            }}
+          >
             Confirm Payment
           </button>
 
-          <button className={styles['button__cancel_order']}>
+          <button
+            className={styles['button__cancel_order']}
+            onClick={() => {
+              setState(PaymentStates.Offering);
+            }}
+          >
             Cancel order
           </button>
         </div>
@@ -211,7 +250,13 @@ function PaymentProcessExecution({ amountSDS, finalCost, nameCurrency }: ArgsTyp
   )
 }
 
-function PaymentProcessSuccess() {
+function PaymentProcessSuccess({
+  amountSDS,
+  finalCost,
+  nameCurrency,
+  state,
+  setState,
+}: ArgsType) {
   return(
     <div className={styles['payment']}>
       <div className="p-10 flex flex-col gap-4 justify-center text-center items-center text-[#252525]">
@@ -225,7 +270,12 @@ function PaymentProcessSuccess() {
           about your contribution.
         </p>
 
-        <button className={styles['button__buy_token']}>
+        <button 
+          className={styles['button__buy_token']}
+          onClick={() => {
+            setState(PaymentStates.Offering);
+          }}
+        >
           View Transaction
         </button>
       </div>
@@ -233,12 +283,41 @@ function PaymentProcessSuccess() {
   )
 }
 
-function PaymentProcess({ amountSDS, finalCost }: ArgsType) {
+function PaymentProcess({ 
+  amountSDS, 
+  finalCost,
+  nameCurrency,
+}: ArgsType) {
+
+  const [state, setState] = useState<PaymentStates>(PaymentStates.Offering);
+
   return (
     <>
-      {/* <PaymentProcessOffer amountSDS={amountSDS} finalCost={finalCost} /> */}
-      {/* <PaymentProcessExecution amountSDS={amountSDS} finalCost={finalCost} nameCurrency={'USDC'} /> */}
-      <PaymentProcessSuccess />
+      {state == PaymentStates.Offering ? (
+        <PaymentProcessOffer 
+          amountSDS={amountSDS} 
+          finalCost={finalCost}
+          nameCurrency={'USDC'}
+          state={state}
+          setState={setState}
+        />
+      ) : state == PaymentStates.Execution ? (
+        <PaymentProcessExecution 
+          amountSDS={amountSDS}
+          finalCost={finalCost}
+          nameCurrency={'USDC'}
+          state={state}
+          setState={setState}
+        />
+      ) : state == PaymentStates.Success ? (
+        <PaymentProcessSuccess 
+          amountSDS={amountSDS}
+          finalCost={finalCost}
+          nameCurrency={'USDC'}
+          state={state}
+          setState={setState}
+        />
+      ) : "" }
     </>
   )
 }

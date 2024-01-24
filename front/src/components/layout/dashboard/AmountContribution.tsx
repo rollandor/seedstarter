@@ -5,7 +5,7 @@ import styles from "@/components/layout/dashboard/AmountContribution.module.scss
 import Modal from "../modal/Modal";
 import PaymentProcess from "../payment/PaymentProcess";
 import { ExchangeRatesArray } from "./ExchangeRates";
-
+import { PaymentStates } from "../payment/PaymentProcess";
 
 
 function calculateCost(
@@ -90,7 +90,13 @@ function AmountContribution({id, setId}: UserInputState) {
           Make payment
         </button>
         <Modal active={paymentActive} setActive={setPaymentActive}>
-          <PaymentProcess />
+          <PaymentProcess
+            amountSDS={parseFloat(inputAmount)}
+            finalCost={calculateCost(id, inputAmount, amount, setAmount)}
+            nameCurrency={"USDT"}
+            state={PaymentStates.Undefined}
+            setState={() => {}}
+          />
         </Modal>
 
         <div className='w-full h-0.5 my-4 bg-[#F5F5F5] rounded'></div>
