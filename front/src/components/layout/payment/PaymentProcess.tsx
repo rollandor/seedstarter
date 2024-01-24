@@ -4,27 +4,33 @@ import React from "react";
 import styles from "@/components/layout/payment/PaymentProcess.module.scss"
 import { useState } from "react";
 
+enum PayMethods {
+  Wallet = 'wallet',
+  Echange = 'exchange',
+  None = '',
+}
+
 function OutViaWallet() {
-  return(
-    <>
-      <h1 className='text-[#8251DE] text-sm py-4'>
+  return (
+    <div className="flex flex-col gap-4 py-4">
+      <span className={styles['text__out_via_exchange']}>
         For transaction authentication purposes, it is mandatory  to submit the wallet
         address from which you will send the funds.
-      </h1>
-      <input 
+      </span>
+      <input
         type='text'
         className={styles['input__wallet_address']}
         spellCheck={false}
       />
-    </>
+    </div>
   )
 }
 
 function OutViaExchange() {
-  return(
+  return (
     <>
       <span className={styles['text__out_via_exchange']}>
-        Do not forget to enter your transaction ID (provided by exchange). It will be 
+        Do not forget to enter your transaction ID (provided by exchange). It will be
         generated on your exchange after sending the funds. It's possible
         to add later the transaction ID in your transactions page.
       </span>
@@ -35,10 +41,11 @@ function OutViaExchange() {
 interface ArgsType {
   amountSDS?: number,
   finalCost?: number,
+  nameCurrency?: string,
 };
 
-function PaymentProcess({amountSDS, finalCost}: ArgsType) {
-  const [method, setMethod] = useState<string>('');
+function PaymentProcessOffer({ amountSDS, finalCost }: ArgsType) {
+  const [method, setMethod] = useState<PayMethods>(PayMethods.None);
 
   return (
     <div className={styles.payment}>
@@ -55,7 +62,7 @@ function PaymentProcess({amountSDS, finalCost}: ArgsType) {
       </div>
 
       <p className='pb-4 text-sm text-[#505050]'>
-        You can choose any of following payment method to make your payment. The 
+        You can choose any of following payment method to make your payment. The
         token balance will appear in your account after successful payment.
       </p>
 
@@ -65,15 +72,15 @@ function PaymentProcess({amountSDS, finalCost}: ArgsType) {
 
       <div className='flex flex-col gap-2'>
         <div className='flex items-center py-4 px-4 border-2 border-[#D1D5DB] rounded-md'>
-          <input 
+          <input
             type="checkbox"
-            checked={method == 'wallet' ? true : false}
-            onClick={e => {
-              if (method == 'wallet') {
-                setMethod('');
+            checked={method == PayMethods.Wallet ? true : false}
+            onChange={e => {
+              if (method == PayMethods.Wallet) {
+                setMethod(PayMethods.None);
                 return;
               }
-              setMethod('wallet');
+              setMethod(PayMethods.Wallet);
             }}
             className={styles['checkbox__method']}
           />
@@ -82,15 +89,15 @@ function PaymentProcess({amountSDS, finalCost}: ArgsType) {
           </label>
         </div>
         <div className='flex items-center py-4 px-4 border-2 border-[#D1D5DB] rounded-md'>
-          <input 
+          <input
             type="checkbox"
             checked={method == 'exchange' ? true : false}
-            onClick={e => {
+            onChange={e => {
               if (method == 'exchange') {
-                setMethod('');
+                setMethod(PayMethods.None);
                 return;
               }
-              setMethod('exchange');
+              setMethod(PayMethods.Echange);
             }}
             className={styles['checkbox__method']}
           />
@@ -132,6 +139,84 @@ function PaymentProcess({amountSDS, finalCost}: ArgsType) {
       </div>
 
     </div>
+  )
+}
+
+function PaymentProcessExecution({ amountSDS, finalCost, nameCurrency }: ArgsType) {
+  const numOrder = '000003';
+
+  return (
+    <div className={styles['payment']}>
+      <h1 className='font-bold text-lg pb-4 text-[#4C3F67]'>
+        Payment process
+      </h1>
+
+      <div className="flex flex-col">
+        <span className={styles['text__info_banner']}>
+          Your Order no. <span className="text-[#A760C8] font-bold">{numOrder}</span> has been placed successfully.
+        </span>
+        <span className={styles['text__regular']}>
+          Please send <span className="text-[#A760C8]">{finalCost?.toFixed(2)} {nameCurrency} </span> to
+          the address below. The token
+          balance will appear in your account only after transaction gets 8
+          confirmations and approved by our team.
+        </span>
+        <h3 className="py-4 font-bold text-[12px]">
+          Payment to the following Tether Wallet Address:
+        </h3>
+
+        <div className="flex">
+          <img src="/qr_code_payment.svg" alt="qr code" className="p-0.5 border-2 border-[#D1D5DB] rounded-md" />
+          <div className="w-full pl-4 flex flex-col justify-between ">
+            <h2 className={styles['h2'] + "pt-2"}>
+              Send Amount <span className="text-[#A760C8]">{finalCost?.toFixed(2)} {nameCurrency}</span>
+            </h2>
+            <div className='flex justify-between items-center py-2 px-2 border-2 border-[#D1D5DB] rounded-md'>
+              <span className="text-sm text-[#939393]">0xB34e2223d92B5FF99a6F93416510a7e4aB66AdDE</span>
+              <img src="/copy_button.svg" alt="" className="p-0.5 bg-[#E7EDF6]" />
+            </div>
+          </div>
+        </div>
+
+        <OutViaWallet />
+
+        <div className="flex py-2 gap-4">
+          <button className={styles['button__buy_token']}>
+            Confirm Payment
+          </button>
+
+          <button className={styles['button__cancel_order']}>
+            Cancel order
+          </button>
+        </div>
+
+        <div className='py-4 text-[#31B54C] text-xs flex gap-2'>
+          <img src="/warn_icon_green.svg" alt="info_icon" />
+          <span>
+            Do not make payment through exchanges (Binance, HTX, e .t. c.) instead you can
+            use MetaMask, Trust Wallet or any wallet that support BNB chain,
+          </span>
+        </div>
+
+        <div className='text-[#D11000C4] text-xs flex gap-2'>
+          <img src="/warn_icon_red.svg" alt="info_icon" />
+          <span>
+            On case you send a diffrent amount, number of SDS token will update accordingly.
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+  )
+}
+
+function PaymentProcess({ amountSDS, finalCost }: ArgsType) {
+  return (
+    <>
+      {/* <PaymentProcessOffer amountSDS={amountSDS} finalCost={finalCost} /> */}
+      <PaymentProcessExecution amountSDS={amountSDS} finalCost={finalCost} nameCurrency={'USDC'} />
+    </>
   )
 }
 
