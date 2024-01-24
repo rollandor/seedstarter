@@ -1,25 +1,24 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styles from "@/components/layout/dashboard/AmountContribution.module.scss";
 import Modal from "../modal/Modal";
 import PaymentProcess from "../payment/PaymentProcess";
-import { ExchangeRatesArray } from "./ExchangeRates";
-import { PaymentStates } from "../payment/PaymentProcess";
+import { ExchangeRatesArray, getCurrencyName } from "./ExchangeRates";
+import { PaymentBoardContext } from "../payment/PaymentBoard";
 
-
-function calculateCost(
-  idCurrecy: string,
+function calculateFinalCost(
+  currencyID: string,
   inAmount: string,
   amount: number,
   setAmount: Function
 ): number {
-  if (idCurrecy == '' || inAmount == '') {
+  if (currencyID == '' || inAmount == '') {
     return 0
   }
   const am = parseFloat(inAmount);
   const rate = ExchangeRatesArray.filter(item => {
-    if (item.key == idCurrecy) return item;
+    if (item.key == currencyID) return item;
   })[0].value
 
   const res = am * rate;
@@ -34,13 +33,10 @@ function calculateCost(
   return res;
 }
 
+function AmountContribution() {
 
-interface UserInputState {
-  id: string,
-  setId: React.Dispatch<React.SetStateAction<string>>,
-}
+  const {currencyID} = useContext(PaymentBoardContext);
 
-function AmountContribution({id, setId}: UserInputState) {
   const [paymentActive, setPaymentActive] = useState<boolean>(false);
   const [inputAmount, setInputAmount] = useState<string>('');
   const [amount, setAmount] = useState<number>(0);
@@ -57,10 +53,10 @@ function AmountContribution({id, setId}: UserInputState) {
 
         <div className='gap-4 flex items-center'>
           <input
-            className={ id == '' ? styles['inputbox__amount'] + " " + styles.disabled : styles['inputbox__amount']}
+            className={ currencyID == '' ? styles['inputbox__amount'] + " " + styles.disabled : styles['inputbox__amount']}
             placeholder="0"
             value={inputAmount}
-            disabled={ id == '' ? true : false }
+            disabled={ currencyID == '' ? true : false }
             onChange={(e) => {
               setInputAmount(e.target.value);
             }}
@@ -77,7 +73,7 @@ function AmountContribution({id, setId}: UserInputState) {
         <div className='h-24 px-8 border rounded-lg flex flex-col justify-center'>
           <span className='font-bold'>TOTAL</span>
           <span className='text-[#8060C8] text-lg font-bold'>
-            {inputAmount != '' ? calculateCost(id, inputAmount, amount, setAmount).toFixed(8) : '' }
+            {inputAmount != '' ? calculateFinalCost(currencyID, inputAmount, amount, setAmount).toFixed(8) : '' }
           </span>
         </div>
 
@@ -92,10 +88,8 @@ function AmountContribution({id, setId}: UserInputState) {
         <Modal active={paymentActive} setActive={setPaymentActive}>
           <PaymentProcess
             amountSDS={parseFloat(inputAmount)}
-            finalCost={calculateCost(id, inputAmount, amount, setAmount)}
-            nameCurrency={"USDT"}
-            state={PaymentStates.Undefined}
-            setState={() => {}}
+            finalCost={calculateFinalCost(currencyID, inputAmount, amount, setAmount)}
+            nameCurrency={getCurrencyName(currencyID)}
           />
         </Modal>
 

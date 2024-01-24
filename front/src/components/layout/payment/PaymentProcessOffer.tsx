@@ -57,7 +57,7 @@ function PaymentProcessOffer({
 
       <div>
         <span>Please make payment of </span>
-        <span className='text-[#8251DE]'>{finalCost?.toFixed(2)} USDT </span>
+        <span className='text-[#8251DE]'>{finalCost?.toFixed(2)} {nameCurrency} </span>
         <span>to recieve </span>
         <span className='text-[#8251DE]'>{amountSDS?.toFixed(2)} SDS </span>
         <span>token</span>

@@ -40,3 +40,14 @@ export const ExchangeRatesArray = [
     key: "6",
   },
 ]
+
+export function getCurrencyName(currencyID: string): string {
+  try {
+    return ExchangeRatesArray.filter(item => {
+      if (item.key == currencyID) return item;
+    })[0].currencyName;
+
+  } catch (error) {
+    return '';
+  }
+}

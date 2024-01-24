@@ -44,19 +44,19 @@ function PaymentProcess({
         <PaymentProcessOffer 
           amountSDS={amountSDS} 
           finalCost={finalCost}
-          nameCurrency={'USDC'}
+          nameCurrency={nameCurrency}
         />
       ) : state == PaymentStates.Execution ? (
         <PaymentProcessExecution 
           amountSDS={amountSDS}
           finalCost={finalCost}
-          nameCurrency={'USDC'}
+          nameCurrency={nameCurrency}
         />
       ) : state == PaymentStates.Success ? (
         <PaymentProcessSuccess 
           amountSDS={amountSDS}
           finalCost={finalCost}
-          nameCurrency={'USDC'}
+          nameCurrency={nameCurrency}
         />
       ) : "" }
     </PaymentProcessContext.Provider>

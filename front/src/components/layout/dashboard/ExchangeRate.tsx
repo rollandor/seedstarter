@@ -3,22 +3,21 @@
 import React from "react"
 import styles from "@/components/layout/dashboard/ExchangeRate.module.scss";
 import { ExchangeRatesArray } from "@/components/layout/dashboard/ExchangeRates";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useContext } from "react";
+import { PaymentBoardContext } from "../payment/PaymentBoard";
 
-interface UserInputState {
-  id: string,
-  setId: React.Dispatch<React.SetStateAction<string>>,
-}
+function ExchangeRates() {
 
-function ExchangeRates({id, setId}: UserInputState) {
+  const {currencyID, setCurrencyID} = useContext(PaymentBoardContext);
+
   const [active, setActive] = useState('');
   const handleClick = (event: any) => {
-    console.log('passing id = %s; target id = %d', id, event.target.id);
+    console.log('passing id = %s; target id = %d', currencyID, event.target.id);
     if ( active != event.target.id ) {
-      setId(event.target.id);
+      setCurrencyID(event.target.id);
       setActive(event.target.id);
     } else {
-      setId('');
+      setCurrencyID('');
       setActive('');
     }
   }

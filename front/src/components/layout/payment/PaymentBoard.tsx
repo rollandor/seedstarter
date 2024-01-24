@@ -3,15 +3,28 @@
 import ExchangeRates from "../dashboard/ExchangeRate";
 import AmountContribution from "../dashboard/AmountContribution";
 import { useState } from "react";
+import { createContext } from "react";
+
+export const PaymentBoardContext = createContext({
+  currencyID: '',
+  setCurrencyID: (v: string) => {},
+});
 
 function PaymentBoard() {
-  const [value, setValue] = useState<string>('');
+  const [id, setID] = useState<string>('');
 
   return(
-    <div className='w-3/5 h-full bg-white rounded-lg flex flex-col'>
-      <ExchangeRates id={value} setId={setValue} />
-      <AmountContribution id={value} setId={setValue} />
-    </div>
+    <PaymentBoardContext.Provider
+      value={{
+        currencyID: id,
+        setCurrencyID: setID,
+      }}
+    >
+      <div className='w-3/5 h-full bg-white rounded-lg flex flex-col'>
+        <ExchangeRates />
+        <AmountContribution />
+      </div>
+    </PaymentBoardContext.Provider>
   )
 }
 
