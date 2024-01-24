@@ -211,11 +211,34 @@ function PaymentProcessExecution({ amountSDS, finalCost, nameCurrency }: ArgsTyp
   )
 }
 
+function PaymentProcessSuccess() {
+  return(
+    <div className={styles['payment']}>
+      <div className="p-10 flex flex-col gap-4 justify-center text-center items-center text-[#252525]">
+        <img src="/payment_success.svg" alt="" />
+        <h1 className="text-lg">
+          We are verifying your payment.
+        </h1>
+        <p className="text-sm">
+          We will review your transaction and contact you in a few
+          hours. You will receive an email with detailed information
+          about your contribution.
+        </p>
+
+        <button className={styles['button__buy_token']}>
+          View Transaction
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function PaymentProcess({ amountSDS, finalCost }: ArgsType) {
   return (
     <>
       {/* <PaymentProcessOffer amountSDS={amountSDS} finalCost={finalCost} /> */}
-      <PaymentProcessExecution amountSDS={amountSDS} finalCost={finalCost} nameCurrency={'USDC'} />
+      {/* <PaymentProcessExecution amountSDS={amountSDS} finalCost={finalCost} nameCurrency={'USDC'} /> */}
+      <PaymentProcessSuccess />
     </>
   )
 }
