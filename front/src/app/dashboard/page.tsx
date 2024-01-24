@@ -1,11 +1,10 @@
 import React from "react";
-import {
-  TokenBalanceBoard,
-  ICOStatusBoard,
-  AccountStatusBoard,
-  WelcomeBoard,
-  ProgressBoard,
-} from "@/components/layout/dashboard/Dashboard";
+import TokenBalanceBoard from "@/components/layout/dashboard/TokenBalanceBoard";
+import TokenSalesBoard from "@/components/layout/dashboard/TokenSalesBoard";
+import ICOStatusBoard from "@/components/layout/dashboard/ICOStatusBoard";
+import AccountStatusBoard from "@/components/layout/dashboard/AccountStatusBoard";
+import WelcomeBoard from "@/components/layout/dashboard/WelcomeBoard";
+
 
 export default function Dashboard() {
   return(
@@ -16,7 +15,7 @@ export default function Dashboard() {
         <AccountStatusBoard />
       </div>
       <WelcomeBoard />
-      <ProgressBoard />
+      <TokenSalesBoard />
     </div>
   )
 }

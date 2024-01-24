@@ -1,13 +1,20 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import LayoutClient from '@/components/layout/Layout'
 import './globals.scss'
 
 const inter = Inter({ subsets: ['latin'] })
 
+declare global {
+  interface Window {
+    // ethereum: import('ethers').providers.ExternalProvider;
+    ethereum: any;
+  }
+}
+
 export const metadata: Metadata = {
   title: 'Seedstarter',
-  description: 'ICO 2024',
+  description: 'Decentralized private investors venture fund',
+  icons: '/favicon_io/favicon-32x32.png',
 }
 
 export default function RootLayout({
@@ -18,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <LayoutClient>{children}</LayoutClient>
+        {children}
       </body>
     </html>
   )

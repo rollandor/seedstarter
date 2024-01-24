@@ -1,3 +1,92 @@
+.fixed_top {
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1030;
+  background-color: #ffffff;
+}
+
 .navbar {
-  @apply w-full h-32 bg-white flex justify-between mb-4
+  // TODO: think about how can I except using that
+  // chunch because there is an opportunity to wrap 
+  // the all components into special layout but the
+  // navbar has to take up all the width of screen
+  margin-left: auto;
+  margin-right: auto;
+  width: 1200px;
+
+  display: flex;
+  margin-bottom: 16px; // TODO: remove! 
+  justify-content: space-between;
+  height: 8rem;
+}
+
+.navbar__logo {
+  padding-left: 1.75rem;
+  padding-top: 2rem;
+  width: 245px;
+}
+
+.connect_wallet {
+  display: inline-flex;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border-width: 1px;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+  height: 36px;
+  background: #0BB489;
+
+  :hover {
+    background: #0BB489;
+    border-color: #0BB489;
+  }
+}
+
+.navbar__list {
+  height: 40px;
+  color: #8060C8;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.navbar__item {
+  color: #8060C8;
+  padding: 8px 0px;
+  margin: 0px 8px;
+  display: inline-block;
+  position: relative;
+  opacity: 0.9;
+}
+
+.navbar__item:hover {
+  opacity: 1;
+}
+
+.navbar__item::before {
+  // transition: 300ms;
+  height: 5px;
+  content: "";
+  position: absolute;
+  background-color: #8060C8;
+}
+
+.navbar__item::before {
+  height: 0%;
+  width: 100%;
+  bottom: 0px;
+}
+
+.navbar__item:hover::before {
+  height: 2px;
 }
