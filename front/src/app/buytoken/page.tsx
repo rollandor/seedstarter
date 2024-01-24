@@ -2,9 +2,7 @@ import React from "react";
 import TokenBalanceBoard from "@/components/layout/dashboard/TokenBalanceBoard";
 import TokenSalesBoard from "@/components/layout/dashboard/TokenSalesBoard";
 import PaymentBoard from "@/components/layout/payment/PaymentBoard";
-import {
-  ICOStatusBoard,
-} from "@/components/layout/dashboard/Dashboard";
+import ICOStatusBoard from "@/components/layout/dashboard/ICOStatusBoard";
 
 export default function Buytoken() {
   return(

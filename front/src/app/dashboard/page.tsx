@@ -1,11 +1,10 @@
 import React from "react";
 import TokenBalanceBoard from "@/components/layout/dashboard/TokenBalanceBoard";
 import TokenSalesBoard from "@/components/layout/dashboard/TokenSalesBoard";
-import {
-  ICOStatusBoard,
-  AccountStatusBoard,
-  WelcomeBoard,
-} from "@/components/layout/dashboard/Dashboard";
+import ICOStatusBoard from "@/components/layout/dashboard/ICOStatusBoard";
+import AccountStatusBoard from "@/components/layout/dashboard/AccountStatusBoard";
+import WelcomeBoard from "@/components/layout/dashboard/WelcomeBoard";
+
 
 export default function Dashboard() {
   return(
