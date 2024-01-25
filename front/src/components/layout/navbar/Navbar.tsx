@@ -3,75 +3,10 @@
 import React from "react";
 import styles from '@/components/layout/navbar/Navbar.module.scss'
 import { MENU } from "./Navbar.data";
-import { useState, useEffect } from "react";
-import { Suspense } from "react";
 import Link from "next/link";
+import { RainbowKitCustomConnectButton } from "../RainbowKitCustomConnectButton";
 
 const Navbar = () => {
-  const [haveMetamask, setHaveMetamask] = useState(true);
-  const [client, setClient] = useState({
-    isConnected: false,
-    address: "",
-  });
-
-  const checkConnection = async () => {
-    const { ethereum }: any = window;
-    if (ethereum) {
-      setHaveMetamask(true);
-      const accounts = await ethereum.request({ method: "eth_accounts" });
-      if (accounts.length > 0) {
-        setClient({
-          isConnected: true,
-          address: accounts[0],
-        });
-      } else {
-        setClient({
-          isConnected: false,
-          address: "",
-        });
-      }
-    } else {
-      setHaveMetamask(false);
-    }
-  };
-
-  const connectWeb3 = async () => {
-    try {
-      const { ethereum }: any = window;
-
-      if (!ethereum) {
-        console.log("Metamask not detected");
-        return;
-      }
-
-      const accounts = await ethereum.request({
-        method: "eth_requestAccounts",
-      });
-
-      setClient({
-        isConnected: true,
-        address: accounts[0],
-      });
-    } catch (error) {
-      console.log("Error connecting to metamask", error);
-    }
-  };
-
-  useEffect(() => {
-    const {ethereum}: any = window;
-    if (ethereum) {
-      // added handler for listen metamask event
-      // https://docs.metamask.io/wallet/reference/provider-api/#accountschanged
-      window.ethereum.on('accountsChanged', async () => {
-        console.log('changed accounts state!');
-        checkConnection();
-        return
-      })
-    }
-
-    checkConnection();
-  }, []);
-
   return (
     <>
       <div id="header" className={styles['fixed_top']}>
@@ -107,28 +42,7 @@ const Navbar = () => {
               <span className='text-[#0BB489]'>Welcome, User!</span>
               <img className='px-4' src='/male_user.svg' />
             </div>
-
-            {/* ---- */}
-            <div>
-              {haveMetamask ? client.isConnected ? (
-                <button className={styles['connect_wallet']} >
-                  {client.address.slice(0, 4)}...
-                  {client.address.slice(38, 42)}
-                </button>
-              ) : (
-                <>
-                  <Suspense fallback="Processin...">
-                    <button className={styles['connect_wallet']} onClick={connectWeb3}>
-                      Connect Wallet
-                    </button>
-                  </Suspense>
-                </>
-              ) : (
-                <p className={styles['connect_wallet']}>
-                  Turn on Metamask
-                </p>
-              )}
-            </div>
+            <RainbowKitCustomConnectButton />
           </div>
 
         </header>
