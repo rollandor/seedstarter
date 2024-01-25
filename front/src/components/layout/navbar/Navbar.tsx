@@ -2,11 +2,47 @@
 
 import React from "react";
 import styles from '@/components/layout/navbar/Navbar.module.scss'
-import { MENU } from "./Navbar.data";
+// import { MENU } from "./Navbar.data";
 import Link from "next/link";
 import { RainbowKitCustomConnectButton } from "../RainbowKitCustomConnectButton";
+import { usePathname } from "next/navigation";
+
+const MENU = [
+  {
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'smth',
+  },
+  {
+    name: 'Buy token',
+    url: '/buytoken',
+    icon: 'smth',
+  },
+  {
+    name: 'Transactions',
+    url: '/transactions',
+    icon: 'smth',
+  },
+  {
+    name: 'Profile',
+    url: '/profile',
+    icon: 'smth',
+  },
+  {
+    name: 'My tokens',
+    url: '/mytokens',
+    icon: 'smth',
+  },
+  {
+    name: 'Main site',
+    url: 'https://github.com/rollandor/seedstarter',
+    icon: 'smth',
+  },
+]
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
     <>
       <div id="header" className={styles['fixed_top']}>
@@ -29,11 +65,20 @@ const Navbar = () => {
             </div>
 
             <ul className={styles['navbar__list']}>
-              {MENU.map(item => (
-                <li key={item.url} className={styles['navbar__item']}>
-                  <Link href={item.url}>{item.name}</Link>
-                </li>
-              ))}
+              {MENU.map(({name, url, icon}) => {
+                const isActive = pathname === url;
+                return(
+                  <li key={url}>
+                    <Link 
+                      href={url}
+                      passHref
+                      className={isActive ? `${styles['navbar__item__active']}` : styles['navbar__item']}
+                    >
+                      {name}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </div>
 

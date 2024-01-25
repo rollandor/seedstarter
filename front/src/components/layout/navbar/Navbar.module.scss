@@ -7,6 +7,8 @@
 }
 
 .navbar {
+  $item-color: #8060C8;
+
   // TODO: think about how can I except using that
   // chunch because there is an opportunity to wrap 
   // the all components into special layout but the
@@ -18,12 +20,70 @@
   display: flex;
   justify-content: space-between;
   height: 8rem;
-}
 
-.navbar__logo {
-  padding-left: 1.75rem;
-  padding-top: 2rem;
-  width: 245px;
+  &__logo {
+    padding-left: 1.75rem;
+    padding-top: 2rem;
+    width: 245px;
+  }
+
+  &__list {
+    height: 40px;
+    color: $item-color;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__item {
+    color: $item-color;
+    padding: 8px 0px;
+    margin: 0px 8px;
+    display: inline-block;
+    position: relative;
+    opacity: 0.9;
+
+    &:hover {
+      opacity: 1;
+
+      &::before {
+        height: 2px;
+      }
+    }
+
+    &::before {
+      transition: 300ms;
+      content: "";
+      position: absolute;
+      background-color: $item-color;
+    }
+
+    &::before {
+      height: 0%;
+      width: 100%;
+      bottom: 0px;
+    }
+
+    &__active {
+      color: $item-color;
+      padding: 8px 0px;
+      margin: 0px 8px;
+      display: inline-block;
+      position: relative;
+      opacity: 0.9;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        background-color: $item-color;
+        height: 2px;
+        width: 100%;
+        bottom: 0px;
+      }
+    }
+  }
 }
 
 .connect_wallet {
@@ -48,44 +108,4 @@
     background: #0BB489;
     border-color: #0BB489;
   }
-}
-
-.navbar__list {
-  height: 40px;
-  color: #8060C8;
-
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.navbar__item {
-  color: #8060C8;
-  padding: 8px 0px;
-  margin: 0px 8px;
-  display: inline-block;
-  position: relative;
-  opacity: 0.9;
-}
-
-.navbar__item:hover {
-  opacity: 1;
-}
-
-.navbar__item::before {
-  // transition: 300ms;
-  height: 5px;
-  content: "";
-  position: absolute;
-  background-color: #8060C8;
-}
-
-.navbar__item::before {
-  height: 0%;
-  width: 100%;
-  bottom: 0px;
-}
-
-.navbar__item:hover::before {
-  height: 2px;
 }

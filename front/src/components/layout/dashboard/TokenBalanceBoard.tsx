@@ -1,42 +1,6 @@
 "use client"
 
-import { Suspense } from "react";
-import { getCurrentAddress, getBalanceOf } from "@/components/metamask/contract";
-import { useState, useEffect } from "react";
-
 function TokenBalanceBoard() {
-  const [haveMetamask, setHaveMetamask] = useState(false);
-  const [client, setClient] = useState({
-    isConnected: false,
-  })
-
-  const checkConnection = async () => {
-    const { ethereum }: any = window;
-    if (ethereum) {
-      setHaveMetamask(true);
-      try {
-        const accounts = await ethereum.request({ method: "eth_accounts" });
-        if (accounts.length > 0) {
-          setClient({
-            isConnected: true,
-          });
-        } else {
-          setClient({
-            isConnected: false,
-          });
-        }
-      } catch (error) {
-        console.error("failed to get accounts: " + error)
-      }
-    } else {
-      setHaveMetamask(false);
-    }
-  };
-
-  useEffect(() => {
-    checkConnection();
-  }, []);
-
   return (
     <div className='h-44 py-4 bg-[#8060C8] rounded-lg font-bold'>
 
