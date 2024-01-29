@@ -5,16 +5,15 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-
 contract SeedstarterPresale is Ownable {
     IERC20 public token;
     address public sellerAddress;
     uint256 public presaleTokenAmount;
     bool public presaleActive = true;
-    uint256 public softCap = 10 ether;
-    uint256 public hardCap = 40 ether;
-    uint256 public maxTxAmount = 1000;
-    uint256 public maxWalletAmount = 1000000;
+    uint256 public softCap = 10 ether;  // ...?
+    uint256 public hardCap = 40 ether;  // ...?
+    uint256 public maxTxAmount = 1000000 * 10 ** 18;  // максимальное кол-во купленных токенов за 1 транзакцию
+    uint256 public maxWalletAmount = 1000000 * 10 ** 18;  // макс кол-во токенов, которыми может владеть инвестор
     uint256 public totalSold = 0;
     uint256 public totalFund = 0 ether;
 
@@ -39,20 +38,27 @@ contract SeedstarterPresale is Ownable {
 
     // token buy
     function buyToken(uint256 _amount) public payable {
+
+        console.log("msg.value: ", msg.value);
+
         require(presaleActive, "Presale is not active!");
         require(address(this).balance <= hardCap, "Hardcap limit exceeds!");
         require(_amount >= 0, "Please enter minimum token!");
+
         uint256 _id = getCurrentStageIdActive();
         require(_id > 0, "Stage info not available!");
+
         uint256 _bonus = stages[_id].bonus;
         uint256 _price = stages[_id].price;
         uint256 _start = stages[_id].start;
         uint256 _end = stages[_id].end;
         require(_start <= block.timestamp, "Presale comming soon!");
         require(_end >= block.timestamp, "Presale end!");
+
         require(msg.value >= (_amount * _price), "Not enough payment!");
         uint256 _bonusAmount = (_amount * _bonus) / 100;
-        uint256 _totalAmount = _amount + _bonusAmount;
+        uint256 _totalAmount = (_amount + _bonusAmount) * _price;
+        
         require(
             (totalSold + _totalAmount) <= presaleTokenAmount,
             "Presale token amount exceeds!"
@@ -61,6 +67,8 @@ contract SeedstarterPresale is Ownable {
             _totalAmount <= maxTxAmount,
             "Maximum transaction limit excceds!"
         );
+        // проверяем кол-во токенов на кошельке покупателя, чтобы не привышало
+        // максимальные порог владения токенов одним аккаунтом
         require(
             (_totalAmount + token.balanceOf(msg.sender)) <= maxWalletAmount,
             "Maximum wallet token limit excceds!"
