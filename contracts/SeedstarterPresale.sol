@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+import "hardhat/console.sol";
+
 contract SeedstarterPresale is Ownable {
-    IERC20 public token;
+    ERC20 public token;
+
     address public sellerAddress;
     uint256 public presaleTokenAmount;
     bool public presaleActive = true;
@@ -32,7 +35,7 @@ contract SeedstarterPresale is Ownable {
     constructor(address _token, address _seller) 
         Ownable(_seller)
     {
-        token = IERC20(_token);
+        token = ERC20(_token);
         sellerAddress = _seller;
     }
 
@@ -56,8 +59,17 @@ contract SeedstarterPresale is Ownable {
         require(_end >= block.timestamp, "Presale end!");
 
         require(msg.value >= (_amount * _price), "Not enough payment!");
+
+        console.log("_amount: ", _amount);
+        console.log("_bonus: ", _bonus);
+
         uint256 _bonusAmount = (_amount * _bonus) / 100;
-        uint256 _totalAmount = (_amount + _bonusAmount) * _price;
+
+        console.log("_bonusAmount: ", _bonusAmount);
+
+        uint256 _totalAmount = (_amount + _bonusAmount) * 10 ** token.decimals();
+
+        console.log("_totalAmount: ", _totalAmount);
         
         require(
             (totalSold + _totalAmount) <= presaleTokenAmount,
@@ -86,7 +98,7 @@ contract SeedstarterPresale is Ownable {
     // update token address
     function setToken(address _token) public onlyOwner {
         require(_token != address(0), "Token is zero address!");
-        token = IERC20(_token);
+        token = ERC20(_token);
     }
 
     // update seller address
