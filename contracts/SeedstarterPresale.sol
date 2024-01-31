@@ -42,8 +42,6 @@ contract SeedstarterPresale is Ownable {
     // token buy
     function buyToken(uint256 _amount) public payable {
 
-        console.log("msg.value: ", msg.value);
-
         require(presaleActive, "Presale is not active!");
         require(address(this).balance <= hardCap, "Hardcap limit exceeds!");
         require(_amount >= 0, "Please enter minimum token!");
@@ -58,18 +56,21 @@ contract SeedstarterPresale is Ownable {
         require(_start <= block.timestamp, "Presale comming soon!");
         require(_end >= block.timestamp, "Presale end!");
 
-        require(msg.value >= (_amount * _price), "Not enough payment!");
+        uint256 _amountTokens = _amount / (10 ** token.decimals());
+        console.log("_amountTokens = %d SDS", _amountTokens);
+        console.log("required amount = %d wei", _amountTokens * _price);
+        console.log("msg.value = %d wei ", msg.value);
 
-        console.log("_amount: ", _amount);
-        console.log("_bonus: ", _bonus);
+        require(msg.value >= (_amountTokens * _price), "Not enough payment!");
 
-        uint256 _bonusAmount = (_amount * _bonus) / 100;
+        console.log("_bonus %d%", _bonus);
 
-        console.log("_bonusAmount: ", _bonusAmount);
+        uint256 _bonusAmount = _amount * 20 / 100;
+        uint256 _totalAmount = _amount + _bonusAmount;
 
-        uint256 _totalAmount = (_amount + _bonusAmount) * 10 ** token.decimals();
-
-        console.log("_totalAmount: ", _totalAmount);
+        console.log("_amount      = %d SDS", _amount);
+        console.log("_bonusAmount = %d SDS", _bonusAmount);
+        console.log("_totalAmount = %d SDS ", _totalAmount);
         
         require(
             (totalSold + _totalAmount) <= presaleTokenAmount,

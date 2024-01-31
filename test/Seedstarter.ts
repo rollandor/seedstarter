@@ -3,6 +3,8 @@ import {
 } from "@nomicfoundation/hardhat-toolbox/network-helpers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+import { SeedstarterPresale } from "../typechain-types";
+import { parseEther, formatEther, BaseContract } from "ethers";
 
 
 /**
@@ -19,7 +21,7 @@ const deployToken = async () => {
   const sds = await Seedstarter.deploy(owner.address);
 
   return { sds, owner };
-}
+};
 
 const deployPresale = async () => {
   const { sds, owner } = await loadFixture(deployToken);
@@ -40,7 +42,7 @@ const deployPresale = async () => {
   await presale.addStage(20, price, startTime, endTime);
 
   return { presale };
-}
+};
 
 
 describe("Seedstarter", function () {
@@ -72,36 +74,92 @@ describe("Seedstarter", function () {
       const { presale } = await loadFixture(deployPresale);
 
       expect(await presale.getCurrentStageIdActive()).to.equal(1);
-    })
+    });
 
-    it("[presale] buying 1000 sds tokens", async () => {
+    it("[presale] buying 1233 sds tokens", async () => {
       const { sds } = await loadFixture(deployToken);
       const { presale } = await loadFixture(deployPresale);
 
-      const accounts = await ethers.getSigners();
-      const signer = accounts[2];
+      const signer = (await ethers.getSigners())[2];
       const buyer = new ethers.Contract(presale.target, presale.interface, signer);
 
-      const amountSDS = 1000.0; // I want to buy 1000 SDS
+      const userInput = 1233.332333;
+
+      const amountSDS = parseEther(userInput.toString());
       const currentStage = await presale.stages(await presale.getCurrentStageIdActive());
-      const currentPrice = currentStage[2];
+      const paymentEth = amountSDS / (10n ** await sds.decimals()) * currentStage.price;
 
-      const bonusPer = Number(currentStage[1]);
-      const finalAmoundSDS = (bonusPer / 100 + 1) * amountSDS;
+      const finalAmoundSDS = (
+        (amountSDS * currentStage.bonus / 100n) + amountSDS
+      );
 
-      let b;
+      let balance = await sds.balanceOf(signer.address);
 
-      console.log(`-- Current stage ${currentStage[0]}; ${ethers.formatEther(currentPrice)} eth for one SDS token`);
+      await buyer.buyToken(
+        amountSDS,
+        { value: paymentEth }
+      );
 
-      b = ethers.formatEther(await sds.balanceOf(signer.address));
-      console.log(`-- signer balance before ${b}`)
+      balance = await sds.balanceOf(signer.address);
 
-      const tx = await buyer.buyToken(amountSDS, {value: BigInt(amountSDS) * currentPrice});
+      expect(await sds.balanceOf(signer.address)).to.equal(finalAmoundSDS);
+    });
 
-      b = ethers.formatEther(await sds.balanceOf(signer.address));
-      console.log(`-- signer balance after ${b}`)
+    it("[presale] every account buys any value of SDS tokens", async () => {
+      const { sds } = await loadFixture(deployToken);
+      const { presale } = await loadFixture(deployPresale);
 
-      expect(parseFloat(b)).to.equal(finalAmoundSDS);
-    })
-  })
+      // all accounts except owner
+      const accounts = (await ethers.getSigners()).slice(1);
+
+      type BuyerSDS = {
+        address: string,
+        presale: SeedstarterPresale,
+      };
+      let buyers: any[] = [];
+
+      for (const acc of accounts) {
+        buyers.push({
+          address: acc.address,
+          presale: new ethers.Contract(presale.target, presale.interface, acc),
+        });
+      }
+
+      // buying token via presale contract
+      const currentStage = await presale.stages(await presale.getCurrentStageIdActive());
+
+      for (const buyer of buyers) {
+        const userInput = (Math.random() * 3000);
+
+        console.log(`\t-- ${buyer.address} input ${userInput} SDS`);
+
+        const amountSDS = parseEther(userInput.toString());
+        const currentStage = await presale.stages(await presale.getCurrentStageIdActive());
+        const paymentEth = amountSDS / (10n ** await sds.decimals()) * currentStage.price;
+
+        const finalAmoundSDS = (
+          (amountSDS * currentStage.bonus / 100n) + amountSDS
+        );
+
+        let balance = await sds.balanceOf(buyer.address);
+
+        await buyer.presale.buyToken(
+          amountSDS,
+          { value: paymentEth }
+        );
+
+        balance = await sds.balanceOf(buyer.address);
+
+        expect(await sds.balanceOf(buyer.address)).to.equal(finalAmoundSDS);
+      }
+
+      for (const buyer of buyers) {
+        console.log(`\t-- ${buyer.address} balance ${
+          formatEther(await sds.balanceOf(buyer.address))
+        } SDS`)
+      }
+    });
+
+
+  });
 });
