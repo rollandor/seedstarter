@@ -65,7 +65,7 @@ contract SeedstarterPresale is Ownable {
 
         console.log("_bonus %d%", _bonus);
 
-        uint256 _bonusAmount = _amount * 20 / 100;
+        uint256 _bonusAmount = _amount * _bonus / 100;
         uint256 _totalAmount = _amount + _bonusAmount;
 
         console.log("_amount      = %d SDS", _amount);
