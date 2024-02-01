@@ -12,7 +12,6 @@ function ExchangeRates() {
 
   const [active, setActive] = useState('');
   const handleClick = (event: any) => {
-    console.log('passing id = %s; target id = %d', currencyID, event.target.id);
     if ( active != event.target.id ) {
       setCurrencyID(event.target.id);
       setActive(event.target.id);

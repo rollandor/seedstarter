@@ -4,6 +4,16 @@ import { PaymentStates, ArgsType, PaymentProcessContext } from "./PaymentProcess
 import { useContext } from "react";
 import { OutViaWallet } from "./PaymentProcessOffer";
 
+import { 
+  parseEther,
+  formatEther,
+  ethers,
+  TransactionResponse,
+  TransactionReceipt,
+} from "ethers";
+import * as SeedstarterContract from "@/../artifacts/contracts/Seedstarter.sol/Seedstarter.json";
+import * as PresaleContract from "@/../artifacts/contracts/SeedstarterPresale.sol/SeedstarterPresale.json";
+
 function PaymentProcessExecution({ 
   amountSDS,
   finalCost,
@@ -11,6 +21,55 @@ function PaymentProcessExecution({
 }: ArgsType) {
   const numOrder = '000003';
   const {state, setState} = useContext(PaymentProcessContext);
+
+  const buyToken = async() => {
+    if (amountSDS <= 0) {
+      console.error("invalid amount sds");
+      return;
+    }
+    if (!window.ethereum) {
+      console.error('unable to get window ethereum object');
+      return;
+    }
+
+    const web3Provider = new ethers.BrowserProvider(window.ethereum);
+    const buyerAddr = (await web3Provider.listAccounts())[0];
+    const signer = await web3Provider.getSigner(buyerAddr.address);
+
+    const sds = new ethers.Contract(process.env.SDS_ADDR, SeedstarterContract.abi, web3Provider);
+    const presale = new ethers.Contract(process.env.SDS_PRESALE_ADDR, PresaleContract.abi, signer);
+
+    const sellerAddr = await presale.sellerAddress();
+    if (buyerAddr === sellerAddr) {
+      console.error('failed to buy tokens, error: buyer address is equal seller');
+      return;
+    }
+
+    const _amountSDS = parseEther(amountSDS.toString())
+    const currentStage = await presale.stages(await presale.getCurrentStageIdActive());
+    console.log(currentStage)
+    const bonusPer: bigint = currentStage[1];
+    const priceSDS: bigint = currentStage[2];
+    const decimals: bigint = BigInt(await sds.decimals());
+
+    const paymentEth = _amountSDS / (10n ** decimals) * priceSDS;
+
+    console.log(`paymentEth = ${paymentEth} wei`);
+    const finalAmoundSDS = (
+      (_amountSDS * bonusPer / 100n) + _amountSDS
+    );
+    console.log(`final amount = ${finalAmoundSDS} SDS`);
+
+    const tx: TransactionResponse = await presale.buyToken(
+      _amountSDS,
+      { value: paymentEth }
+    );
+    console.log(tx);
+    const receipt: TransactionReceipt | null = await tx.wait()
+    console.log(receipt);
+
+    setState(PaymentStates.Success);
+  }
 
   return (
     <div className={styles['payment']}>
@@ -23,7 +82,7 @@ function PaymentProcessExecution({
           Your Order no. <span className="text-[#A760C8] font-bold">{numOrder}</span> has been placed successfully.
         </span>
         <span className={styles['text__regular']}>
-          Please send <span className="text-[#A760C8]">{finalCost?.toFixed(2)} {nameCurrency} </span> to
+          Please send <span className="text-[#A760C8]">{finalCost.toString()} {nameCurrency} </span> to
           the address below. The token
           balance will appear in your account only after transaction gets 8
           confirmations and approved by our team.
@@ -36,10 +95,10 @@ function PaymentProcessExecution({
           <img src="/qr_code_payment.svg" alt="qr code" className="p-0.5 border-2 border-[#D1D5DB] rounded-md" />
           <div className="w-full pl-4 flex flex-col justify-between ">
             <h2 className={styles['h2'] + "pt-2"}>
-              Send Amount <span className="text-[#A760C8]">{finalCost?.toFixed(2)} {nameCurrency}</span>
+              Send Amount <span className="text-[#A760C8]">{finalCost.toString()} {nameCurrency}</span>
             </h2>
             <div className='flex justify-between items-center py-2 px-2 border-2 border-[#D1D5DB] rounded-md'>
-              <span className="text-sm text-[#939393]">0xB34e2223d92B5FF99a6F93416510a7e4aB66AdDE</span>
+              <span className="text-sm text-[#939393]">{}</span>
               <img src="/copy_button.svg" alt="" className="p-0.5 bg-[#E7EDF6]" />
             </div>
           </div>
@@ -50,9 +109,7 @@ function PaymentProcessExecution({
         <div className="flex py-2 gap-4">
           <button 
             className={styles['button__buy_token']}
-            onClick={() => {
-              setState(PaymentStates.Success);
-            }}
+            onClick={buyToken}
           >
             Confirm Payment
           </button>

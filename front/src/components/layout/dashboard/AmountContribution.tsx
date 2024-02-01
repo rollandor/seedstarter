@@ -27,7 +27,6 @@ function calculateFinalCost(
     // trigger re-render so I have to compare before state
     // with after
     setAmount(res);
-    console.log('final amount = %f', res);
   }
 
   return res;
@@ -73,7 +72,7 @@ function AmountContribution() {
         <div className='h-24 px-8 border rounded-lg flex flex-col justify-center'>
           <span className='font-bold'>TOTAL</span>
           <span className='text-[#8060C8] text-lg font-bold'>
-            {inputAmount != '' ? calculateFinalCost(currencyID, inputAmount, amount, setAmount).toFixed(8) : '' }
+            {inputAmount != '' ? calculateFinalCost(currencyID, inputAmount, amount, setAmount).toString() : '' }
           </span>
         </div>
 

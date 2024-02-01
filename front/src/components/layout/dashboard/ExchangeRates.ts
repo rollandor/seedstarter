@@ -28,15 +28,15 @@ export const ExchangeRatesArray = [
     key: "4",
   },
   {
-    currencyName: "USDC",
+    currencyName: "ETH",
     networkName: "",
-    value: 0.00111,
+    value: 0.0000111,
     key: "5",
   },
   {
-    currencyName: "BUSD",
-    networkName: "",
-    value: 0.55,
+    currencyName: "SETH",
+    networkName: "Sepolia",
+    value: 0.000001,
     key: "6",
   },
 ]
