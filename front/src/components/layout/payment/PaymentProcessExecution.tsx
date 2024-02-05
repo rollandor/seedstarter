@@ -11,8 +11,8 @@ import {
   TransactionResponse,
   TransactionReceipt,
 } from "ethers";
-import * as SeedstarterContract from "@/../artifacts/contracts/Seedstarter.sol/Seedstarter.json";
-import * as PresaleContract from "@/../artifacts/contracts/SeedstarterPresale.sol/SeedstarterPresale.json";
+import SeedstarterContract from "@/../artifacts/contracts/Seedstarter.sol/Seedstarter.json";
+import PresaleContract from "@/../artifacts/contracts/SeedstarterPresale.sol/SeedstarterPresale.json";
 
 function PaymentProcessExecution({ 
   amountSDS,
