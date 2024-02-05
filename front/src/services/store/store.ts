@@ -1,6 +1,7 @@
-import create from "zustand";
+import { create } from "zustand";
 import * as chains from "viem/chains";
-import { ChainWithAttributes } from "@/utils";
+import { Chain } from "viem/chains";
+import { FetchTokenResult } from '@wagmi/core'
 
 
 /**
@@ -13,15 +14,15 @@ import { ChainWithAttributes } from "@/utils";
  */
 
 type GlobalState = {
-  nativeCurrencyPrice: number;
-  setNativeCurrencyPrice: (newNativeCurrencyPriceState: number) => void;
-  targetNetwork: ChainWithAttributes;
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => void;
+  targetNetwork: Chain;
+  setTargetNetwork: (newTargetNetwork: Chain) => void;
+  tokenData: FetchTokenResult | undefined;
+  setTokenData: (newTokenData: FetchTokenResult) => void;
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
-  nativeCurrencyPrice: 0,
-  setNativeCurrencyPrice: (newValue: number): void => set(() => ({ nativeCurrencyPrice: newValue })),
   targetNetwork: chains.sepolia,
-  setTargetNetwork: (newTargetNetwork: ChainWithAttributes) => set(() => ({ targetNetwork: newTargetNetwork })),
+  setTargetNetwork: (newTargetNetwork: Chain) => set(() => ({ targetNetwork: newTargetNetwork })),
+  tokenData: undefined,
+  setTokenData: (newTokenData: FetchTokenResult) => set(() => ({ tokenData: newTokenData })),
 }));

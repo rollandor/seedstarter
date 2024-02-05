@@ -1,7 +1,7 @@
 import * as chains from "viem/chains";
 
 export type SeedstarterConfig = {
-  targetNetworks: readonly chains.Chain[];
+  targetNetworks: chains.Chain[];
   pollingInterval: number;
   walletAutoConnect: boolean;
 };
