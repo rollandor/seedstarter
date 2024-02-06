@@ -6,6 +6,7 @@ import { useGlobalState, PresaleDataType } from '@/services/store/store';
 
 import SeedstarterPresaleABI from '@/../artifacts/contracts/SeedstarterPresale.sol/SeedstarterPresale.json';
 import SeedstarterABI from '@/../artifacts/contracts/Seedstarter.sol/Seedstarter.json';
+import { formatEther } from "viem";
 
 
 /**
@@ -98,7 +99,7 @@ export function useSdsContract() {
   }, [tokenData, owner]);
 }
 
-export function useRaisedAmount(): bigint | undefined {
+export function useOwnerBalance(): bigint | undefined {
   const owner = useGlobalState(state => state.owner);
 
   const args = owner ? {
@@ -106,7 +107,7 @@ export function useRaisedAmount(): bigint | undefined {
     address: process.env.SDS_ADDR,
     functionName: 'balanceOf',
     args: [owner],
-  } : {}
+  } : {};
   const { data: ownerBalance } = useContractRead(args);
 
   if (!ownerBalance) {
@@ -114,4 +115,18 @@ export function useRaisedAmount(): bigint | undefined {
   }
 
   return ownerBalance;
+}
+
+export function useSalesProgress(): number | undefined {
+  const ownerBalance = useOwnerBalance();
+  const tokenData = useGlobalState(state => state.tokenData);
+
+  if (tokenData && ownerBalance) {
+    const _onwerBalance = parseFloat(formatEther(ownerBalance));
+    const _totalSupply = parseFloat(tokenData.totalSupply.formatted);
+    const _saledTokens = _totalSupply - _onwerBalance;
+    return (_saledTokens / _totalSupply * 100);
+  }
+
+  return undefined;
 }

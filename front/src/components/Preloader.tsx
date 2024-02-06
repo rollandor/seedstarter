@@ -1,5 +1,5 @@
 import React from 'react';
-import { usePresaleContract, useRaisedAmount, useSdsContract } from '@/hooks/useContractInfo';
+import { usePresaleContract, useOwnerBalance, useSdsContract } from '@/hooks/useContractInfo';
 
 function Preloader() {
   usePresaleContract();
