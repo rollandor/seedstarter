@@ -20,7 +20,7 @@ const TokenBalanceBoardActive = ({acc}: {acc: string}) => {
 
       <div className='h-1/2 px-8 flex items-center'>
         <div className='w-12 h-12 rounded-[50%] bg-[#D9D9D9]'></div>
-        <div className='w-1/2 h-12 ml-4 flex flex-col justify-between'>
+        <div className='w-full h-12 ml-4 flex flex-col justify-between'>
           <span className='text-[#40E060]'>TOKEN BALANCE</span>
           <div className="text-white">
             {data !== undefined ? (

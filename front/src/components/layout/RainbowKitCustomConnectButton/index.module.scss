@@ -2,26 +2,24 @@
 .btn {
   $based-color: #0BB489;
   $based-color-hover: #0aa57e;
-  $btn-size: 36px;
 
-  height: $btn-size;
+  width: fit-content;
+  height: fit-content;
   color: white;
   background: $based-color;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
 
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  border-width: 1px;
 
-  font-size: 1rem;
-  line-height: 1.5rem;
   font-weight: 700;
-  text-align: center;
+  transition: 300ms;
 
   &:hover {
     background: $based-color-hover;
     border-color: $based-color-hover;
+    transition: 300ms;
   }
 }

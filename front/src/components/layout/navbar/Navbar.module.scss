@@ -87,25 +87,20 @@
 }
 
 .connect_wallet {
-  display: inline-flex;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
   align-items: center;
-  border-radius: 8px;
-  border-width: 1px;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  color: #ffffff;
-  height: 36px;
   background: #0BB489;
+  padding: 0.5rem 1rem;
 
-  :hover {
+  border-radius: 0.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  transition: 300ms;
+
+  &:hover {
     background: #0BB489;
-    border-color: #0BB489;
+    transition: 300ms;
   }
 }
