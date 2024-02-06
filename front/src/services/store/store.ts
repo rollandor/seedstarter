@@ -18,6 +18,8 @@ type GlobalState = {
   setTokenData: (newTokenData: FetchTokenResult) => void;
   presaleData: PresaleDataType | undefined;
   setPresaleData: (newPresaleData: PresaleDataType) => void;
+  owner: string,
+  setOwner: (newOwner: string) => void;
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
@@ -26,5 +28,7 @@ export const useGlobalState = create<GlobalState>(set => ({
   tokenData: undefined,
   setTokenData: (newTokenData: FetchTokenResult) => set(() => ({ tokenData: newTokenData })),
   presaleData: undefined,
-  setPresaleData: (newPresaleData: PresaleDataType) => set(() => ({ presaleData: newPresaleData }))
+  setPresaleData: (newPresaleData: PresaleDataType) => set(() => ({ presaleData: newPresaleData })),
+  owner: '',
+  setOwner: (newOwner: string) => set(() => ({ owner: newOwner }))
 }));

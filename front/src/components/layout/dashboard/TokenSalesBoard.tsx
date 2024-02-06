@@ -1,7 +1,14 @@
-import styles from "@/components/layout/dashboard/TokenSalesBoard.module.scss"
-import { getAmountSaledTokens, getTotalSupply } from "@/components/metamask/contract";
+'use client'
 
-async function TokenSalesBoard() {
+import styles from "@/components/layout/dashboard/TokenSalesBoard.module.scss"
+import { useRaisedAmount } from "@/hooks/useContractInfo";
+import { useGlobalState } from "@/services/store/store"
+import { formatEther } from "viem";
+
+function TokenSalesBoard() {
+  const tokenData = useGlobalState(state => state.tokenData);
+  const raisedAmount = useRaisedAmount();
+
   const calendarWindow = (text: string) => {
     return (
       <div className={styles['calendar__item']}>
@@ -11,9 +18,6 @@ async function TokenSalesBoard() {
     )
   }
 
-  // const amountTokens = await getAmountSaledTokens();
-  // const totalSupply = await getTotalSupply();
-
   return (
     <div className='bg-white rounded-lg px-7 py-6 flex flex-col justify-center'>
       <h1 className='font-bold text-lg'>Token sales progress</h1>
@@ -21,12 +25,16 @@ async function TokenSalesBoard() {
       <div className="flex justify-between mb-1">
         <div className='text-sm text-[#909090] font-bold py-2 flex flex-col'>
           <span>RAISED AMOUNT</span>
-          {/* <span>{amountTokens} SDS</span> */}
+          {raisedAmount !== undefined && tokenData !== undefined ? (
+            <span>{formatEther(tokenData.totalSupply.value - raisedAmount)} SDS</span>
+          ) : ""} 
         </div>
 
         <div className='text-sm text-[#909090] font-bold py-2 flex flex-col items-end'>
           <span>TOTAL TOKEN SUPPLY</span>
-          {/* <span>{totalSupply} SDS</span> */}
+          {tokenData !== undefined ? (
+            <span>{tokenData.totalSupply.formatted}</span>
+          ): ""}
         </div>
       </div>
 
