@@ -8,9 +8,9 @@ import WelcomeBoard from "@/components/layout/dashboard/WelcomeBoard";
 
 export default function Dashboard() {
   return(
-    <div className="gap-4 flex flex-col justify-center">
+    <div className="w-full flex flex-col justify-center gap-4">
       <TokenBalanceBoard />
-      <div className="h-44 gap-4 flex flex-row justify-between">
+      <div className="flex flex-row justify-between gap-4">
         <ICOStatusBoard />
         <AccountStatusBoard />
       </div>

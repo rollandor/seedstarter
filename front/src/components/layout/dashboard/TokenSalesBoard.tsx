@@ -42,11 +42,12 @@ function TokenSalesBoard() {
       </div>
 
       {/* slider */}
-      <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#909090]">
-        <div 
-          className={"bg-[#8251DE] h-2.5 rounded-full" + ` w-[${salesProgress.toFixed(1)}%]`}
-        >
-        </div>
+      <div className=" bg-gray-200 rounded-full h-2.5 dark:bg-[#909090]">
+        {salesProgress ? (
+          <div className={"h-2.5 rounded-full " + `w-[${salesProgress.toFixed(1)}%] bg-[#8251DE]`}></div>
+        ) : (
+          <div className="h-2.5 rounded-full"></div>
+        )}
       </div>
 
       {presaleState !== undefined ? (
