@@ -4,10 +4,13 @@ import styles from "@/components/layout/dashboard/TokenSalesBoard.module.scss"
 import { useRaisedAmount } from "@/hooks/useContractInfo";
 import { useGlobalState } from "@/services/store/store"
 import { formatEther } from "viem";
+import CountdownTimer from "@/components/CountdownTimer";
 
 function TokenSalesBoard() {
   const tokenData = useGlobalState(state => state.tokenData);
   const raisedAmount = useRaisedAmount();
+
+  const presaleState = useGlobalState(state => state.presaleData)
 
   const calendarWindow = (text: string) => {
     return (
@@ -43,15 +46,9 @@ function TokenSalesBoard() {
         <div className="bg-[#8251DE] h-2.5 w-[25%] rounded-full"></div>
       </div>
 
-      <div className='flex flex-col pt-6 gap-2'>
-        <span className='text-sm text-[#909090] font-bold'>SALES END IN</span>
-        <div className='flex gap-2'>
-          {calendarWindow('DAY')}
-          {calendarWindow('HOUR')}
-          {calendarWindow('MIN')}
-          {calendarWindow('SEC')}
-        </div>
-      </div>
+      {presaleState !== undefined ? (
+        <CountdownTimer targetDate={Number(presaleState.end) * 1000} />
+      ) : ""}
     </div>
   )
 }
