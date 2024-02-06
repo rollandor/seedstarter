@@ -42,7 +42,7 @@ function AmountContribution() {
 
   return (
     <>
-      <div className='px-4 py-4 flex flex-col'>
+      <div className='flex flex-col'>
         <h1 className='font-bold text-lg'>Amount of contribution</h1>
         <span className='pb-4 text-[#606060]'>
           Enter the amount of SDS tokens that you want to buy. The

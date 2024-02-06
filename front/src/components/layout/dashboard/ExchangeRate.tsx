@@ -47,7 +47,7 @@ function ExchangeRates() {
   }
 
   return (
-    <div className='px-4 py-4 flex flex-col'>
+    <div className='flex flex-col'>
       <h1 className='font-bold text-lg'>
         Choose your preferred currency and calculate SDS token price
       </h1>
