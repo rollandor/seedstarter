@@ -1,23 +1,23 @@
 import { create } from "zustand";
 import * as chains from "viem/chains";
 import { Chain } from "viem/chains";
-import { FetchTokenResult } from '@wagmi/core'
+import { FetchTokenResult } from '@wagmi/core';
 
-
-/**
- * Zustand Store
- *
- * You can add global state to the app using this useGlobalState, to get & set
- * values from anywhere in the app.
- *
- * Think about it as a global useState.
- */
+export type PresaleDataType = {
+  currentStageIdAcite: bigint,
+  bonus: bigint,
+  price: bigint,
+  start: bigint,
+  end: bigint,
+};
 
 type GlobalState = {
   targetNetwork: Chain;
   setTargetNetwork: (newTargetNetwork: Chain) => void;
   tokenData: FetchTokenResult | undefined;
   setTokenData: (newTokenData: FetchTokenResult) => void;
+  presaleData: PresaleDataType | undefined;
+  setPresaleData: (newPresaleData: PresaleDataType) => void;
 };
 
 export const useGlobalState = create<GlobalState>(set => ({
@@ -25,4 +25,6 @@ export const useGlobalState = create<GlobalState>(set => ({
   setTargetNetwork: (newTargetNetwork: Chain) => set(() => ({ targetNetwork: newTargetNetwork })),
   tokenData: undefined,
   setTokenData: (newTokenData: FetchTokenResult) => set(() => ({ tokenData: newTokenData })),
+  presaleData: undefined,
+  setPresaleData: (newPresaleData: PresaleDataType) => set(() => ({ presaleData: newPresaleData }))
 }));
