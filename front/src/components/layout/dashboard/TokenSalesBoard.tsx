@@ -6,18 +6,31 @@ import { useOwnerBalance, useSalesProgress } from "@/hooks/useContractInfo";
 import { useGlobalState } from "@/services/store/store"
 import CountdownTimer from "@/components/CountdownTimer";
 
+function ProgressBar({currentValue}:{currentValue?: number}) {
+  return(
+    <div className="w-full h-2.5 bg-gray-200 rounded-full dark:bg-[#909090]">
+      {currentValue !== undefined ? (
+        <div className={"h-2.5 rounded-full bg-[#8251DE] w-[1%]"}></div>
+      ) : (
+        <div className="h-2.5 rounded-full"></div>
+      )}
+    </div>
+  )
+}
+
 function TokenSalesBoard() {
-  const [salesProgress, setSalesProgress] = useState<number>(0);
 
   const tokenData = useGlobalState(state => state.tokenData);
   const ownerBalance = useOwnerBalance();
   const presaleState = useGlobalState(state => state.presaleData)
 
+  const [salesProgress, setSalesProgress] = useState<number>(0);
   const salesProgressPercent = useSalesProgress();
 
   useEffect(() => {
     if (salesProgressPercent) {
       setSalesProgress(salesProgressPercent);
+      console.log(salesProgressPercent)
     }
   }, [salesProgressPercent, salesProgress])
 
@@ -41,14 +54,7 @@ function TokenSalesBoard() {
         </div>
       </div>
 
-      {/* slider */}
-      <div className=" bg-gray-200 rounded-full h-2.5 dark:bg-[#909090]">
-        {salesProgress ? (
-          <div className={"h-2.5 rounded-full " + `w-[${salesProgress.toFixed(1)}%] bg-[#8251DE]`}></div>
-        ) : (
-          <div className="h-2.5 rounded-full"></div>
-        )}
-      </div>
+      <ProgressBar currentValue={salesProgress}/>
 
       {presaleState !== undefined ? (
         <CountdownTimer targetDate={Number(presaleState.end) * 1000} />

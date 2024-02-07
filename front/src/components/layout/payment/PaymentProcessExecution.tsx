@@ -98,7 +98,7 @@ function PaymentProcessExecution({
               Send Amount <span className="text-[#A760C8]">{finalCost.toString()} {nameCurrency}</span>
             </h2>
             <div className='flex justify-between items-center py-2 px-2 border-2 border-[#D1D5DB] rounded-md'>
-              <span className="text-sm text-[#939393]">{}</span>
+              <span className="text-sm text-[#939393]">{process.env.SDS_PRESALE_ADDR}</span>
               <img src="/copy_button.svg" alt="" className="p-0.5 bg-[#E7EDF6]" />
             </div>
           </div>

@@ -31,7 +31,7 @@ const ShowCounter = ({ days, hours, minutes, seconds }: {
   seconds: number,
 }) => {
   return (
-    <div className="flex flex pt-6 gap-2">
+    <div className="flex pt-6 gap-2">
       <DateTimeDisplay value={days} type={'Days'} isDanger={days <= 3} />
       <DateTimeDisplay value={hours} type={'Hours'} isDanger={false} />
       <DateTimeDisplay value={minutes} type={'Mins'} isDanger={false} />

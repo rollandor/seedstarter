@@ -7,22 +7,22 @@
 }
 
 .button__buy_token {
-  height: 42px;
-  padding: 1rem;
+  width: fit-content;
+  height: fit-content;
   display: flex;
-  justify-content: center;
   align-items: center;
+  background: #0BB489;
+  padding: 0.5rem 1rem;
 
-  border-radius: 0.375rem;
-  border-width: 1px;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  transition: 300ms;
 
-  color: white;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-
-  background-color: #31B54C;
+  &:hover {
+    background: #0aa57e;
+    transition: 300ms;
+  } 
 }
 
 .button__cancel_order {
