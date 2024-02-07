@@ -12,7 +12,6 @@ function ExchangeRates() {
 
   const [active, setActive] = useState('');
   const handleClick = (event: any) => {
-    console.log('passing id = %s; target id = %d', currencyID, event.target.id);
     if ( active != event.target.id ) {
       setCurrencyID(event.target.id);
       setActive(event.target.id);
@@ -48,7 +47,7 @@ function ExchangeRates() {
   }
 
   return (
-    <div className='px-4 py-4 flex flex-col'>
+    <div className='flex flex-col'>
       <h1 className='font-bold text-lg'>
         Choose your preferred currency and calculate SDS token price
       </h1>

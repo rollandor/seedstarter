@@ -7,6 +7,8 @@
 }
 
 .navbar {
+  $item-color: #8060C8;
+
   // TODO: think about how can I except using that
   // chunch because there is an opportunity to wrap 
   // the all components into special layout but the
@@ -16,77 +18,89 @@
   width: 1200px;
 
   display: flex;
-  margin-bottom: 16px; // TODO: remove! 
   justify-content: space-between;
   height: 8rem;
-}
 
-.navbar__logo {
-  padding-left: 1.75rem;
-  padding-top: 2rem;
-  width: 245px;
-}
+  &__logo {
+    padding-left: 1.75rem;
+    padding-top: 2rem;
+    width: 245px;
+  }
 
-.connect_wallet {
-  display: inline-flex;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  border-width: 1px;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 700;
-  text-align: center;
-  color: #ffffff;
-  height: 36px;
-  background: #0BB489;
+  &__list {
+    height: 40px;
+    color: $item-color;
 
-  :hover {
-    background: #0BB489;
-    border-color: #0BB489;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  &__item {
+    color: $item-color;
+    padding: 8px 0px;
+    margin: 0px 8px;
+    display: inline-block;
+    position: relative;
+    opacity: 0.9;
+
+    &:hover {
+      opacity: 1;
+
+      &::before {
+        height: 2px;
+      }
+    }
+
+    &::before {
+      transition: 300ms;
+      content: "";
+      position: absolute;
+      background-color: $item-color;
+    }
+
+    &::before {
+      height: 0%;
+      width: 100%;
+      bottom: 0px;
+    }
+
+    &__active {
+      color: $item-color;
+      padding: 8px 0px;
+      margin: 0px 8px;
+      display: inline-block;
+      position: relative;
+      opacity: 0.9;
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        background-color: $item-color;
+        height: 2px;
+        width: 100%;
+        bottom: 0px;
+      }
+    }
   }
 }
 
-.navbar__list {
-  height: 40px;
-  color: #8060C8;
-
+.connect_wallet {
+  width: fit-content;
+  height: fit-content;
   display: flex;
-  justify-content: space-around;
   align-items: center;
-}
+  background: #0BB489;
+  padding: 0.5rem 1rem;
 
-.navbar__item {
-  color: #8060C8;
-  padding: 8px 0px;
-  margin: 0px 8px;
-  display: inline-block;
-  position: relative;
-  opacity: 0.9;
-}
+  border-radius: 0.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  transition: 300ms;
 
-.navbar__item:hover {
-  opacity: 1;
-}
-
-.navbar__item::before {
-  // transition: 300ms;
-  height: 5px;
-  content: "";
-  position: absolute;
-  background-color: #8060C8;
-}
-
-.navbar__item::before {
-  height: 0%;
-  width: 100%;
-  bottom: 0px;
-}
-
-.navbar__item:hover::before {
-  height: 2px;
+  &:hover {
+    background: #0BB489;
+    transition: 300ms;
+  }
 }

@@ -1,66 +1,38 @@
-"use client"
+'use client';
 
-import { Suspense } from "react";
-import { getCurrentAddress, getBalanceOf } from "@/components/metamask/contract";
-import { useState, useEffect } from "react";
+import React from "react";
+import { formatEther, parseEther } from "viem";
+import { useAccount } from "wagmi";
+import { useContractRead } from "wagmi";
+import { erc20ABI } from "wagmi";
 
-function TokenBalanceBoard() {
-  const [haveMetamask, setHaveMetamask] = useState(false);
-  const [client, setClient] = useState({
-    isConnected: false,
+const TokenBalanceBoardActive = ({acc}: {acc: string}) => {
+
+  const { data } = useContractRead({
+    abi: erc20ABI,
+    address: process.env.SDS_ADDR,
+    functionName: 'balanceOf',
+    args: [acc],
   })
 
-  const checkConnection = async () => {
-    const { ethereum }: any = window;
-    if (ethereum) {
-      setHaveMetamask(true);
-      try {
-        const accounts = await ethereum.request({ method: "eth_accounts" });
-        if (accounts.length > 0) {
-          setClient({
-            isConnected: true,
-          });
-        } else {
-          setClient({
-            isConnected: false,
-          });
-        }
-      } catch (error) {
-        console.error("failed to get accounts: " + error)
-      }
-    } else {
-      setHaveMetamask(false);
-    }
-  };
-
-  useEffect(() => {
-    checkConnection();
-  }, []);
-
   return (
-    <div className='h-44 py-4 bg-[#8060C8] rounded-lg font-bold'>
+    <div className='bg-[#8060C8] rounded-lg font-bold flex flex-col gap-4 py-8'>
 
-      <div className='h-1/2 ml-7 flex items-center'>
+      <div className='h-1/2 px-8 flex items-center'>
         <div className='w-12 h-12 rounded-[50%] bg-[#D9D9D9]'></div>
-        <div className='w-1/2 h-12 ml-4 flex flex-col justify-between'>
+        <div className='w-full h-12 ml-4 flex flex-col justify-between'>
           <span className='text-[#40E060]'>TOKEN BALANCE</span>
           <div className="text-white">
-            {/* {haveMetamask ? (
-              <Suspense fallback="Processing...">
-                {client.isConnected ? (
-                  <span>{getBalanceOf(getCurrentAddress())} SDS</span>
-                ) : (
-                  <></>
-                )}
-              </Suspense>
+            {data !== undefined ? (
+              <span>{formatEther(data)} SDS</span>
             ) : (
-              <></>
-            )} */}
+              <span>Loading...</span>
+            )}
           </div>
         </div>
       </div>
 
-      <div className='h-1/2 ml-7 flex flex-col'>
+      <div className='h-1/2 px-8 flex flex-col'>
         <span className='text-[#40E060]'>YOUR CONTRIBUTION IN</span>
         <div className='text-white w-full h-full gap-20 flex items-center'>
           <div className='flex flex-col items-center'>
@@ -79,6 +51,28 @@ function TokenBalanceBoard() {
       </div>
 
     </div>
+  );
+}
+
+const TokenBalanceBoardDisable = () => {
+  return (
+    <div className='bg-[#8060C8] rounded-lg font-bold flex justify-center items-center p-4 gap-4'>
+      <span className="text-white">No connected wallets</span>
+    </div>
+  );
+}
+
+function TokenBalanceBoard() {
+  const acc = useAccount();
+
+  return(
+    <React.Fragment>
+      {acc.isConnected ? (
+        <TokenBalanceBoardActive acc={acc.address!}/>
+      ) : (
+        <TokenBalanceBoardDisable />
+      )}
+    </React.Fragment>
   )
 }
 

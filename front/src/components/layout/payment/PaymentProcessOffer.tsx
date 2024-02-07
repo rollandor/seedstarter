@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import styles from "@/components/layout/payment/PaymentProcess.module.scss"
 import { useState } from "react";
 import { PaymentStates, ArgsType, PaymentProcessContext } from "./PaymentProcess";
-
+import { useAccount } from "wagmi";
 
 enum PayMethods {
   Wallet = 'wallet',
@@ -13,6 +13,8 @@ enum PayMethods {
 }
 
 export function OutViaWallet() {
+  const account = useAccount();
+
   return (
     <div className="flex flex-col gap-4 py-4">
       <span className={styles['text__out_via_exchange']}>
@@ -23,6 +25,8 @@ export function OutViaWallet() {
         type='text'
         className={styles['input__wallet_address']}
         spellCheck={false}
+        disabled={true}
+        defaultValue={account !== undefined ? account.address : ""}
       />
     </div>
   )
@@ -57,9 +61,9 @@ function PaymentProcessOffer({
 
       <div>
         <span>Please make payment of </span>
-        <span className='text-[#8251DE]'>{finalCost?.toFixed(2)} {nameCurrency} </span>
+        <span className='text-[#8251DE]'>{finalCost?.toString()} {nameCurrency} </span>
         <span>to recieve </span>
-        <span className='text-[#8251DE]'>{amountSDS?.toFixed(2)} SDS </span>
+        <span className='text-[#8251DE]'>{amountSDS?.toString()} SDS </span>
         <span>token</span>
       </div>
 

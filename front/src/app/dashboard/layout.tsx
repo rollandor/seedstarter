@@ -8,8 +8,6 @@ export default function DashboardLayout({
 }) {
   return (
     <section>
-      <Navbar />
- 
       <ContentLayout>
         {children}
       </ContentLayout>

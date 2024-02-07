@@ -8,7 +8,6 @@ export default function BuytokenLayout({
 }) {
   return (
     <section>
-      <Navbar />
       <ContentLayout>
         {children}
       </ContentLayout>

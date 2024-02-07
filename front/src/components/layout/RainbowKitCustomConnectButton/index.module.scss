@@ -1,0 +1,25 @@
+
+.btn {
+  $based-color: #0BB489;
+  $based-color-hover: #0aa57e;
+
+  width: fit-content;
+  height: fit-content;
+  color: white;
+  background: $based-color;
+  padding: 0.5rem 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+
+  font-weight: 700;
+  transition: 300ms;
+
+  &:hover {
+    background: $based-color-hover;
+    border-color: $based-color-hover;
+    transition: 300ms;
+  }
+}

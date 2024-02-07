@@ -1,18 +1,38 @@
-import styles from "@/components/layout/dashboard/TokenSalesBoard.module.scss"
-import { getAmountSaledTokens, getTotalSupply } from "@/components/metamask/contract";
+'use client'
 
-async function TokenSalesBoard() {
-  const calendarWindow = (text: string) => {
-    return (
-      <div className={styles['calendar__item']}>
-        <span className='text-xl'>00</span>
-        <span className='text-sm text-[#909090] font-bold'>{text}</span>
-      </div>
-    )
-  }
+import { useEffect, useState } from "react";
+import { formatEther } from "viem";
+import { useOwnerBalance, useSalesProgress } from "@/hooks/useContractInfo";
+import { useGlobalState } from "@/services/store/store"
+import CountdownTimer from "@/components/CountdownTimer";
 
-  // const amountTokens = await getAmountSaledTokens();
-  // const totalSupply = await getTotalSupply();
+function ProgressBar({currentValue}:{currentValue?: number}) {
+  return(
+    <div className="w-full h-2.5 bg-gray-200 rounded-full dark:bg-[#909090]">
+      {currentValue !== undefined ? (
+        <div className={"h-2.5 rounded-full bg-[#8251DE] w-[1%]"}></div>
+      ) : (
+        <div className="h-2.5 rounded-full"></div>
+      )}
+    </div>
+  )
+}
+
+function TokenSalesBoard() {
+
+  const tokenData = useGlobalState(state => state.tokenData);
+  const ownerBalance = useOwnerBalance();
+  const presaleState = useGlobalState(state => state.presaleData)
+
+  const [salesProgress, setSalesProgress] = useState<number>(0);
+  const salesProgressPercent = useSalesProgress();
+
+  useEffect(() => {
+    if (salesProgressPercent) {
+      setSalesProgress(salesProgressPercent);
+      console.log(salesProgressPercent)
+    }
+  }, [salesProgressPercent, salesProgress])
 
   return (
     <div className='bg-white rounded-lg px-7 py-6 flex flex-col justify-center'>
@@ -21,29 +41,24 @@ async function TokenSalesBoard() {
       <div className="flex justify-between mb-1">
         <div className='text-sm text-[#909090] font-bold py-2 flex flex-col'>
           <span>RAISED AMOUNT</span>
-          {/* <span>{amountTokens} SDS</span> */}
+          {ownerBalance !== undefined && tokenData !== undefined ? (
+            <span>{formatEther(tokenData.totalSupply.value - ownerBalance)} SDS</span>
+          ) : ""} 
         </div>
 
         <div className='text-sm text-[#909090] font-bold py-2 flex flex-col items-end'>
           <span>TOTAL TOKEN SUPPLY</span>
-          {/* <span>{totalSupply} SDS</span> */}
+          {tokenData !== undefined ? (
+            <span>{tokenData.totalSupply.formatted}</span>
+          ): ""}
         </div>
       </div>
 
-      {/* slider */}
-      <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-[#909090]">
-        <div className="bg-[#8251DE] h-2.5 w-[25%] rounded-full"></div>
-      </div>
+      <ProgressBar currentValue={salesProgress}/>
 
-      <div className='flex flex-col pt-6 gap-2'>
-        <span className='text-sm text-[#909090] font-bold'>SALES END IN</span>
-        <div className='flex gap-2'>
-          {calendarWindow('DAY')}
-          {calendarWindow('HOUR')}
-          {calendarWindow('MIN')}
-          {calendarWindow('SEC')}
-        </div>
-      </div>
+      {presaleState !== undefined ? (
+        <CountdownTimer targetDate={Number(presaleState.end) * 1000} />
+      ) : ""}
     </div>
   )
 }

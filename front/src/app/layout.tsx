@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { AppWithProviders } from '@/components/AppWithProvider';
 import './globals.scss'
-
-const inter = Inter({ subsets: ['latin'] })
 
 declare global {
   interface Window {
@@ -17,15 +15,13 @@ export const metadata: Metadata = {
   icons: '/favicon_io/favicon-32x32.png',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        {children}
+    <html>
+      <body>
+        <AppWithProviders>
+          {children}
+        </AppWithProviders>
       </body>
     </html>
   )

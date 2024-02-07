@@ -8,8 +8,6 @@ export default function TransactionsLayout({
 }) {
   return (
     <section>
-      <Navbar />
- 
       <ContentLayout>
         {children}
       </ContentLayout>

@@ -27,7 +27,6 @@ function calculateFinalCost(
     // trigger re-render so I have to compare before state
     // with after
     setAmount(res);
-    console.log('final amount = %f', res);
   }
 
   return res;
@@ -43,7 +42,7 @@ function AmountContribution() {
 
   return (
     <>
-      <div className='px-4 py-4 flex flex-col'>
+      <div className='flex flex-col'>
         <h1 className='font-bold text-lg'>Amount of contribution</h1>
         <span className='pb-4 text-[#606060]'>
           Enter the amount of SDS tokens that you want to buy. The
@@ -73,7 +72,7 @@ function AmountContribution() {
         <div className='h-24 px-8 border rounded-lg flex flex-col justify-center'>
           <span className='font-bold'>TOTAL</span>
           <span className='text-[#8060C8] text-lg font-bold'>
-            {inputAmount != '' ? calculateFinalCost(currencyID, inputAmount, amount, setAmount).toFixed(8) : '' }
+            {inputAmount != '' ? calculateFinalCost(currencyID, inputAmount, amount, setAmount).toString() : '' }
           </span>
         </div>
 

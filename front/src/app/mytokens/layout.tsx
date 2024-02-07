@@ -8,8 +8,6 @@ export default function MyTokensLayout({
 }) {
   return (
     <section>
-      <Navbar />
- 
       <ContentLayout>
         {children}
       </ContentLayout>

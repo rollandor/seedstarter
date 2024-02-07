@@ -20,7 +20,7 @@ function PaymentBoard() {
         setCurrencyID: setID,
       }}
     >
-      <div className='w-3/5 h-full bg-white rounded-lg flex flex-col'>
+      <div className='p-8 w-3/5 h-full bg-white rounded-lg flex flex-col gap-8'>
         <ExchangeRates />
         <AmountContribution />
       </div>
