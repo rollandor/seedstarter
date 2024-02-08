@@ -1,7 +1,7 @@
 "use client";
 
 import { WagmiConfig } from "wagmi";
-import Navbar from "@/components/layout/navbar/Navbar";
+import Navbar from "./Navbar/Navbar";
 import { wagmiConfig } from "@/services/web3/wagmiConfig";
 import { chains } from "@/services/web3/wagmiConfig";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";

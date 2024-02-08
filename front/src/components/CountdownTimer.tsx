@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCountdown } from '@/hooks/useCountdown';
-import styles from "@/components/layout/dashboard/TokenSalesBoard.module.scss"
+import styles from "@/components/TokenSalesBoard/TokenSalesBoard.module.scss";
 
 const DateTimeDisplay = ({ value, type, isDanger }: {
   value: number,

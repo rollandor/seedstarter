@@ -1,5 +1,4 @@
-import Navbar from "@/components/layout/navbar/Navbar";
-import ContentLayout from "@/components/layout/contentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 
 export default function BuytokenLayout({
   children, // will be a page or nested layout
