@@ -5,6 +5,12 @@ import styles from "@/components/Navbar/Navbar.module.scss";
 import Link from "next/link";
 import { RainbowKitCustomConnectButton } from "../RainbowKitCustomConnectButton";
 import { usePathname } from "next/navigation";
+import {
+  ListItemButton,
+  Avatar,
+  Box,
+  Typography,
+} from "@mui/material";
 
 const MENU = [
   {
@@ -81,13 +87,22 @@ const Navbar = () => {
             </ul>
           </div>
 
-          <div className='px-4 flex flex-col justify-center'>
-            <div className='py-2 flex items-center'>
-              <span className='text-[#0BB489]'>Welcome, User!</span>
-              <img className='px-4' src='/male_user.svg' />
-            </div>
-            <RainbowKitCustomConnectButton />
-          </div>
+          <Box 
+            display='flex' 
+            flexDirection='column' 
+            justifyContent='center' 
+            alignContent='center'
+          >
+            <Box display='flex' alignItems='center' color='#0Bb489'>
+              <Typography>Welcome, guest!</Typography>
+              <ListItemButton sx={{ borderRadius: '50%', px: 1, }}>
+                <Avatar src="/male_user.svg" />
+              </ListItemButton>
+            </Box>
+            <Box display='flex' justifyContent='center'>
+              <RainbowKitCustomConnectButton />
+            </Box>
+          </Box>
 
         </header>
 
