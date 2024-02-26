@@ -1,22 +1,30 @@
 import prisma from '@/utils/prisma';
 import jwt from 'jsonwebtoken';
-import { NextApiHandler } from 'next';
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
-const userHandler: NextApiHandler = async (req, res) => {
-  const idToken = req.cookies[process.env.COOKIE_NAME];
+export async function GET(req: Request) {
+  const cks = cookies();
+  const idToken = cks.get(process.env.COOKIE_NAME);
 
   if (!idToken) {
-    return res.status(401).json({ message: 'ID token must be provided' });
+    return NextResponse.json(
+      { message: 'ID token must be provided' },
+      { status: 401 },
+    );
   }
 
   try {
     const decodedToken = (await jwt.verify(
-      idToken,
+      idToken.value,
       process.env.ID_TOKEN_SECRET
     )) as unknown as { userId: string; };
 
     if (!decodedToken || !decodedToken.userId) {
-      return res.status(403).json({ message: 'Invalid token' });
+      return NextResponse.json(
+        { message: 'Invalid token' },
+        { status: 403 },
+      );
     }
 
     const user = await prisma.user.findUnique({
@@ -30,7 +38,10 @@ const userHandler: NextApiHandler = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return NextResponse.json(
+        { message: 'User not found' },
+        { status: 404 },
+      );
     }
 
     const accessToken = await jwt.sign(
@@ -41,11 +52,15 @@ const userHandler: NextApiHandler = async (req, res) => {
       }
     );
 
-    res.status(200).json({ user, accessToken });
+    return NextResponse.json(
+      { user, accessToken },
+      { status: 200 },
+    );
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: 'User get error' });
+    return NextResponse.json(
+      { message: 'User get error' },
+      { status: 500 },
+    );
   }
 };
-
-export default userHandler;
