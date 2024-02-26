@@ -1,18 +1,18 @@
-import { NextApiHandlerWithCookie } from '@/types';
-import checkFields from '@/utils/checkFields';
-import cookies from '@/utils/cookie';
-import prisma from '@/utils/prisma';
-import { User } from '@prisma/client';
+import { NextResponse } from 'next/server';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
 
-const registerHandler: NextApiHandlerWithCookie = async (req, res) => {
-  const data: Pick<User, 'username' | 'email' | 'password'> = JSON.parse(
-    req.body
-  );
+import checkFields from '@/utils/checkFields';
+import prisma from '@/utils/prisma';
+
+export async function POST(req: Request) {
+  const data = await req.json();
 
   if (!checkFields(data, ['email', 'password'])) {
-    return res.status(400).json({ message: 'Some required fields are missing' });
+    return NextResponse.json(
+      { message: 'Some required fields are missing' },
+      { status: 400 },
+    );
   }
 
   try {
@@ -21,7 +21,10 @@ const registerHandler: NextApiHandlerWithCookie = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.status(409).json({ message: 'Email already in use' });
+      return NextResponse.json(
+        { message: 'Email already in use' },
+        { status: 409 },
+      );
     }
 
     const passwordHash = await argon2.hash(data.password);
@@ -52,26 +55,26 @@ const registerHandler: NextApiHandlerWithCookie = async (req, res) => {
       }
     );
 
-    res.cookie({
+    let res = NextResponse.json(
+      { user: newUser, accessToken },
+      { status: 200 },
+    );
+    res.cookies.set({
       name: process.env.COOKIE_NAME,
       value: idToken,
-      options: {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        path: '/',
-        sameSite: true,
-        secure: true
-      }
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      path: '/',
+      sameSite: true,
+      secure: true,
     });
 
-    res.status(200).json({
-      user: newUser,
-      accessToken
-    });
+    return res;
   } catch (e) {
     console.log(e);
-    res.status(500).json({ message: 'User register error' });
+    return NextResponse.json(
+      { message: 'Email register error' },
+      { status: 500 },
+    );
   }
 };
-
-export default cookies(registerHandler);
