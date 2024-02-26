@@ -11,6 +11,8 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import Modal from "../Modal/Modal";
+import AuthTabs from "../AuthTabs";
 
 const MENU = [
   {
@@ -47,6 +49,7 @@ const MENU = [
 
 const Navbar = () => {
   const pathname = usePathname();
+  const [authActive, setAuthActive] = React.useState(false);
 
   return (
     <>
@@ -87,15 +90,15 @@ const Navbar = () => {
             </ul>
           </div>
 
-          <Box 
-            display='flex' 
-            flexDirection='column' 
-            justifyContent='center' 
+          <Box
+            display='flex'
+            flexDirection='column'
+            justifyContent='center'
             alignContent='center'
           >
             <Box display='flex' alignItems='center' color='#0Bb489'>
               <Typography>Welcome, guest!</Typography>
-              <ListItemButton sx={{ borderRadius: '50%', px: 1, }}>
+              <ListItemButton onClick={() => setAuthActive(!authActive)} sx={{ borderRadius: '50%', px: 1, }}>
                 <Avatar src="/male_user.svg" />
               </ListItemButton>
             </Box>
@@ -105,6 +108,9 @@ const Navbar = () => {
           </Box>
 
         </header>
+        <Modal active={authActive} setActive={setAuthActive}>
+          <AuthTabs />
+        </Modal>
 
       </div>
     </>

@@ -29,7 +29,6 @@ export default function RegisterForm() {
       gap={4}
       sx={{
         backgroundColor: 'white',
-        borderRadius: 4,
         padding: 4,
       }}
     >

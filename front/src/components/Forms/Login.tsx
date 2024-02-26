@@ -24,6 +24,10 @@ function Login() {
       display='flex'
       flexDirection='column'
       gap={4}
+      sx={{
+        backgroundColor: 'white',
+        padding: 4,
+      }}
     >
       <Typography variant='h4'>Login</Typography>
       <FormControl required error={errors.email}>
