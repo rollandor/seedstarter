@@ -11,8 +11,8 @@ import {
   Box,
   Typography,
 } from "@mui/material";
-import Modal from "../Modal/Modal";
-import AuthTabs from "../AuthTabs";
+import ProfileButton from "../Buttons/Profile";
+import { useUser } from "@/utils/swr";
 
 const MENU = [
   {
@@ -49,6 +49,7 @@ const MENU = [
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { user } = useUser();
   const [authActive, setAuthActive] = React.useState(false);
 
   return (
@@ -97,10 +98,10 @@ const Navbar = () => {
             alignContent='center'
           >
             <Box display='flex' alignItems='center' color='#0Bb489'>
-              <Typography>Welcome, guest!</Typography>
-              <ListItemButton onClick={() => setAuthActive(!authActive)} sx={{ borderRadius: '50%', px: 1, }}>
-                <Avatar src="/male_user.svg" />
-              </ListItemButton>
+              <Typography textAlign='center' py={2}>
+                Welcome, {user ? user.username || user.email : 'guest'}
+              </Typography>
+              <ProfileButton />
             </Box>
             <Box display='flex' justifyContent='center'>
               <RainbowKitCustomConnectButton />
@@ -108,9 +109,6 @@ const Navbar = () => {
           </Box>
 
         </header>
-        <Modal active={authActive} setActive={setAuthActive}>
-          <AuthTabs />
-        </Modal>
 
       </div>
     </>
