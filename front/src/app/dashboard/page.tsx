@@ -1,13 +1,13 @@
 import React from "react";
-import TokenBalanceBoard from "@/components/layout/dashboard/TokenBalanceBoard";
-import TokenSalesBoard from "@/components/layout/dashboard/TokenSalesBoard";
-import ICOStatusBoard from "@/components/layout/dashboard/ICOStatusBoard";
-import AccountStatusBoard from "@/components/layout/dashboard/AccountStatusBoard";
-import WelcomeBoard from "@/components/layout/dashboard/WelcomeBoard";
+import TokenBalanceBoard from "@/components/TokenBalanceBoard/TokenBalanceBoard";
+import TokenSalesBoard from "@/components/TokenSalesBoard/TokenSalesBoard";
+import ICOStatusBoard from "@/components/ICOStatusBoard/ICOStatusBoard";
+import AccountStatusBoard from "@/components/AccountStatusBoard/AccountStatusBoard";
+import WelcomeBoard from "@/components/WelcomeBoard/WelcomeBoard";
 
 
 export default function Dashboard() {
-  return(
+  return (
     <div className="w-full flex flex-col justify-center gap-4">
       <TokenBalanceBoard />
       <div className="flex flex-row justify-between gap-4">
@@ -17,5 +17,5 @@ export default function Dashboard() {
       <WelcomeBoard />
       <TokenSalesBoard />
     </div>
-  )
+  );
 }

@@ -36,4 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 # tmp dev files
-src/components/layout/sandbox
+src/components/Sandbox

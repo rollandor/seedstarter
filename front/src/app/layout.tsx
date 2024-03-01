@@ -1,6 +1,6 @@
-import type { Metadata } from 'next'
+import type { Metadata } from 'next';
 import { AppWithProviders } from '@/components/AppWithProvider';
-import './globals.scss'
+import './globals.scss';
 
 declare global {
   interface Window {
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   title: 'Seedstarter',
   description: 'Decentralized private investors venture fund',
   icons: '/favicon_io/favicon-32x32.png',
-}
+};
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode; }) {
   return (
     <html>
       <body>
@@ -24,5 +24,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </AppWithProviders>
       </body>
     </html>
-  )
+  );
 }

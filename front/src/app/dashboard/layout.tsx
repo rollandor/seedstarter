@@ -1,10 +1,9 @@
-import Navbar from "@/components/layout/navbar/Navbar";
-import ContentLayout from "@/components/layout/contentLayout";
+import ContentLayout from "@/components/ContentLayout/ContentLayout";
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <section>
@@ -12,5 +11,5 @@ export default function DashboardLayout({
         {children}
       </ContentLayout>
     </section>
-  )
+  );
 }

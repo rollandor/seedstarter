@@ -1,0 +1,38 @@
+.make__payment {
+  width: fit-content;
+  height: fit-content;
+
+  display: inline-flex;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: #5AABFF;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+  color: #ffffff;
+  transition: 300ms;
+
+  &:hover {
+    background: #4d91db;
+    transition: 300ms;
+  }
+}
+
+.inputbox__amount {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border-width: 1px;
+  border-color: #D1D5DB;
+  width: 6rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #111827;
+  background-color: #F9FAFB;
+
+  &:disabled {
+    color: #11182754;
+    background-color: #e7e9eb;
+  }
+}

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { erc20ABI, useContractRead, useContractReads, useToken } from "wagmi";
+import { useContractRead, useToken } from "wagmi";
 
 import seedstarterConfig from "@/../seedstarter.config";
 import { useGlobalState, PresaleDataType } from '@/services/store/store';
 
-import SeedstarterPresaleABI from '@/../artifacts/contracts/SeedstarterPresale.sol/SeedstarterPresale.json';
-import SeedstarterABI from '@/../artifacts/contracts/Seedstarter.sol/Seedstarter.json';
+import { SeedstarterABI } from "@/services/contracts/abi/Seedstarter.abi";
+import { PresellerABI } from "@/services/contracts/abi/SeedstarterPresale.abi";
 import { formatEther } from "viem";
 
 
@@ -16,7 +16,7 @@ import { formatEther } from "viem";
 export function usePresaleContract() {
 
   const { data: currentStageIdAcite } = useContractRead({
-    abi: SeedstarterPresaleABI.abi,
+    abi: PresellerABI,
     address: process.env.SDS_PRESALE_ADDR,
     functionName: 'getCurrentStageIdActive',
   });
@@ -27,7 +27,7 @@ export function usePresaleContract() {
   }
 
   const { data: stageState } = useContractRead({
-    abi: SeedstarterPresaleABI.abi,
+    abi: PresellerABI,
     address: process.env.SDS_PRESALE_ADDR,
     functionName: 'stages',
     args: [currentStageIdAcite]
@@ -79,7 +79,7 @@ export function useSdsContract() {
   }
 
   const { data: ownerAddress } = useContractRead({
-    abi: SeedstarterABI.abi,
+    abi: SeedstarterABI,
     address: process.env.SDS_ADDR,
     functionName: 'owner',
   });
@@ -103,7 +103,7 @@ export function useOwnerBalance(): bigint | undefined {
   const owner = useGlobalState(state => state.owner);
 
   const args = owner ? {
-    abi: SeedstarterABI.abi,
+    abi: SeedstarterABI,
     address: process.env.SDS_ADDR,
     functionName: 'balanceOf',
     args: [owner],
